@@ -11,41 +11,42 @@ import projeto.springboot.repository.PessoaRepository;
 
 @Controller
 public class PessoaController {
-	
+
 	@Autowired
 	private PessoaRepository pessoaRepository;
-	
-	
+
 	// URL mapeada: http://localhost:8080/cadastropessoa
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
 	public String inicio() {
-		
+
 		// Retorna para a tela - acessa a pasta/nomeDoArquivo
 		return "cadastro/cadastropessoa";
 	}
-	
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarpessoa")
-	public String salvar(Pessoa pessoa) {
-		
+	public ModelAndView salvar(Pessoa pessoa) {
+
 		pessoaRepository.save(pessoa);
-		
-		return "cadastro/cadastropessoa";
+
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		Iterable<Pessoa> pessoaIt = pessoaRepository.findAll();
+		modelAndView.addObject("pessoas", pessoaIt);
+
+		return modelAndView;
 	}
-	
-	
+
 	// URL mapeada: http://localhost:8080/listapessoas
 	@RequestMapping(method = RequestMethod.GET, value = "/listapessoas")
 	public ModelAndView listarPessoas() {
-		
+
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
-		
+
 		// Carregar no banco de dados a minha lista carregada
 		Iterable<Pessoa> pessoaIt = pessoaRepository.findAll();
-		
+
 		// Add o modelAndView na lista
 		modelAndView.addObject("pessoas", pessoaIt);
-		
+
 		return modelAndView;
 	}
 
