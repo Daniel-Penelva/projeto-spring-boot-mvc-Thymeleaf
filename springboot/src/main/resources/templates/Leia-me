@@ -1,3 +1,7 @@
+Acessar a aplicação: 
+http://localhost:8080/
+http://localhost:8080/cadastropessoa
+   
    < ARQUITETURA MVC - FUNCIONAMENTO > 
                                   
                                                                                                    |-----------------------------------------------
@@ -325,13 +329,21 @@ OBS. Não esquece de renomear o caminho href. Exemplificado abaixo:
 Por exemplo, vamos customizar o botão, podemos copiar a class materialize e colar na tag button. 
 https://materializecss.com/buttons.html
 
+Como estava antes:
 
 <label>Nome:</label>
-			<input name="nome" />
+<input name="nome" />
 			
-			<label>Sobrenome:</label>
-			<input name="sobrenome" />
+<label>Sobrenome:</label>
+<input name="sobrenome" />
 			
-			<label>Idade:</label>
-			<input name="idade" />
+<label>Idade:</label>
+<input name="idade" />
+
+------------- // -------------
+
+<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
+
+"idpessoa" é a variavel onde vai ser capturado o id da pessoa. Essa variavel vai ser passada como parametro no método GET no editar para que possamos recuperar os objetos 
+(os dados) da pessoa para poder jogar na tela e alterar.
  
