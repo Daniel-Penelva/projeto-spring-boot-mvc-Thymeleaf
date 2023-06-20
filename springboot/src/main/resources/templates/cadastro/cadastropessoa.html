@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
 <head>
 <meta charset="ISO-8859-1">
 <title>Cadastro</title>
@@ -7,31 +10,60 @@
 <body>
 
 	<form action="salvarpessoa" method="post">
+		<div class="row">
+            
+		    <div class="input-field col s6">
+		      <i class="material-icons prefix">account_circle</i>
+	          <input placeholder="Entre com seu nome" id="first_name" type="text" class="validate" name="nome">
+	          <label for="first_name">Nome</label>
+	         
+            </div>
+            
+            <div class="input-field col s6">
+              <i class="material-icons prefix">account_circle</i>
+	          <input placeholder="Entre com seu sobrenome" id="first_name" type="text" class="validate" name="sobrenome">
+	          <label for="first_name">Sobrenome</label>
+            </div>
+            
+            <div class="input-field col s6">
+              <i class="material-icons prefix">account_circle</i>
+	          <input placeholder="Entre com sua idade" id="first_name" type="number" class="validate" name="idade">
+	          <label for="first_name">Idade</label>
+            </div>
+			
+		</div>
 		
-		<label>Nome:</label>
-		<input name="nome" />
+		<input class="waves-effect waves-light btn" type="submit" value="Salvar">
 		
-		<label>Sobrenome:</label>
-		<input name="sobrenome" />
-		
-		<label>Idade:</label>
-		<input name="idade" />
-	
-	<input type="submit" value="Salvar">
-
 	</form>
 	
 	<br />
-	<a href="/listapessoas">Carregar Lista Pessoas</a>
+	<a href="/listapessoas" class="waves-effect waves-light btn">Carregar Lista Pessoas</a>
 	
 	<br />
 	<table>
+		<thead>
+          <tr>
+              <th>Id</th>
+              <th>Nome</th>
+              <th>Sobrenome</th>
+              <th>Idade</th>
+          </tr>
+        </thead>
+
+        <tbody>
 		<tr th:each="pessoa : ${pessoas}">
 			<td th:text = ${pessoa.id}></td>
 			<td th:text = ${pessoa.nome}></td>
 			<td th:text = ${pessoa.sobrenome}></td>
 			<td th:text = ${pessoa.idade}></td>
 		</tr>
+		</tbody>
 	</table>
+	
+	
+ <!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="materialize/js/materialize.js"></script>
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
 </html>

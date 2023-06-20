@@ -293,3 +293,45 @@ Além disso, a classe ModelAndView também oferece métodos para configurar outr
 Em resumo, a classe ModelAndView é usada para encapsular dados do modelo e informações da visualização em um objeto no Spring Framework. Ela permite que você especifique o nome 
 da visualização e adicione atributos ao modelo, facilitando a passagem de dados do controlador para a visualização.
 
+
+------------- // -------------
+
+Instalando o Materialize CSS Design - https://materializecss.com/
+
+Vamos baixar o materialize e colocá-lo dentro da pasta "static" projeto. Dentro dessa pasta que fica todos os recursos de css, de imagem e etc...
+Site: https://materializecss.com/getting-started.html
+
+Declarar nas páginas os imports (dentro do head):
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ 
+ <!--Import materialize.css - São dois arquivos css -->
+<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+OBS. Não esquece de renomear o caminho href. Exemplificado abaixo:
+
+<link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+
+
+Por fim a declaração do javascript que vai ficar no corpo.
+<!--JavaScript at end of body for optimized loading - São dois arquivos css -->-->
+<script type="text/javascript" src="js/materialize.min.js"></script>
+
+OBS. Não esquece de renomear o caminho href. Exemplificado abaixo:
+
+<script type="text/javascript" src="materialize/js/materialize.js"></script>
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+
+Por exemplo, vamos customizar o botão, podemos copiar a class materialize e colar na tag button. 
+https://materializecss.com/buttons.html
+
+
+<label>Nome:</label>
+			<input name="nome" />
+			
+			<label>Sobrenome:</label>
+			<input name="sobrenome" />
+			
+			<label>Idade:</label>
+			<input name="idade" />
+ 
