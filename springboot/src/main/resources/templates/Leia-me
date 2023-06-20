@@ -263,3 +263,9 @@ Ao habilitar o suporte a transações, você pode alcançar os seguintes benefí
 Em resumo, a anotação `@EnableTransactionManagement` é usada para habilitar o suporte a transações no Spring Framework. Isso permite que você utilize a anotação `@Transactional` 
 para marcar métodos que devem ser executados em uma transação, facilitando o gerenciamento e a consistência dos dados no seu aplicativo.
 
+------------- // -------------
+
+<tr th:each="pessoa : ${pessoas}">
+
+Essa propriedade "${pessoas}" vai vir do banco de dados.
+A propriedade "pessoa" é o que vai ser mostrado na tela.
