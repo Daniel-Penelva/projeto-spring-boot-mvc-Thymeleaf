@@ -269,3 +269,27 @@ para marcar métodos que devem ser executados em uma transação, facilitando o 
 
 Essa propriedade "${pessoas}" vai vir do banco de dados.
 A propriedade "pessoa" é o que vai ser mostrado na tela.
+
+------------- // -------------
+
+
+A classe ModelAndView é uma classe do Spring Framework que é usada para encapsular dados do modelo e informações da visualização em um objeto.
+
+A classe ModelAndView é frequentemente utilizada em controladores do Spring MVC para fornecer dados ao modelo e especificar a visualização que será renderizada e retornada ao 
+cliente.
+
+A principal finalidade da classe ModelAndView é fornecer uma maneira conveniente de transmitir dados do controlador para a visualização, além de permitir que você especifique a 
+visualização que deve ser renderizada.
+
+Ao criar uma instância de ModelAndView, você pode definir o nome da visualização (o nome lógico da visualização configurada em seu aplicativo) e adicionar atributos ao modelo 
+(dados que serão utilizados pela visualização para renderizar a resposta).
+
+Ao retornar o objeto ModelAndView no método do controlador, o Spring MVC utilizará o nome da visualização para determinar a visualização que deve ser renderizada. Os atributos do modelo serão disponibilizados para a visualização para que ela possa usar os dados na renderização da resposta.
+
+No exemplo, o Spring MVC procuraria pela visualização chamada "cadastro/cadastropessoa" e a renderizaria usando os dados fornecidos no modelo.
+
+Além disso, a classe ModelAndView também oferece métodos para configurar outras propriedades, como status HTTP, cabeçalhos de resposta e redirecionamentos.
+
+Em resumo, a classe ModelAndView é usada para encapsular dados do modelo e informações da visualização em um objeto no Spring Framework. Ela permite que você especifique o nome 
+da visualização e adicione atributos ao modelo, facilitando a passagem de dados do controlador para a visualização.
+
