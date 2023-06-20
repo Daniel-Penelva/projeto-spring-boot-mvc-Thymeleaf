@@ -1,0 +1,123 @@
+   < ARQUITETURA MVC - FUNCIONAMENTO > 
+                                  
+                                                                                                   |-----------------------------------------------
+ Tela/ Cliente/ Sistema                                                                            |         JAVA/ SPRING MVC/ SERVLET            |
+    _______                                                                                        |                                              |
+   |       |                                                                                       |                                              |
+   |       |                requisição /POST/GET                                                   |   CONTROLLER                BANCO DE DADOS   |
+   |       | ------------------------------------------------------------------------------------->| |------------|              |------------|   |
+   |       |                                                                                       | | validações |              |    dados   |   |
+   |       | RESPOSTA compilada com o HTML para o navegador interpretar                            | |            |              |            |   |
+   |_______| <-------------------------------------------------------------------------------------| |____________|              |____________|   |
+                                                                                                   |                                              |
+   Front-End                                                                                       |    ^    |                      ^      |      |
+    (HTML)                                                                                         |    |    |                      |      |      |
+  (Javascript)                                                                                     |    |    v                      |      v      |
+                                                                                                   |                                              |
+                                                                                                   |   SERVICE                    DAO/REPOSITORY  |
+                                                                                                   | |----------|                 |-----------|   |
+                                                                                                   | | Regra de | --------------> | SQL/JPA   |   |
+                                                                                                   | | negócio  | <-------------- |           |   |
+                                                                                                   | |__________|                 |___________|   |
+                                                                                                   |______________________________________________|
+
+A arquitetura MVC (Model-View-Controller) é um padrão de arquitetura de software amplamente utilizado para o desenvolvimento de aplicativos. Ele separa a lógica de 
+negócios, a apresentação dos dados e a interação com o usuário em três componentes distintos: Model, View e Controller. Cada componente possui responsabilidades 
+específicas e se comunica com os outros componentes de forma estruturada. Vamos entender como cada componente funciona:
+
+1. Model:
+O Model representa a camada de dados e lógica de negócios. Ele encapsula o estado e o comportamento dos dados da aplicação. Essa camada é responsável por acessar e 
+manipular os dados, bem como aplicar as regras de negócio. O Model geralmente consiste em classes como entidades, serviços, repositórios, APIs, etc.
+
+2. View:
+A View é responsável pela apresentação dos dados ao usuário. Ela exibe a interface do usuário, como páginas HTML, telas, formulários, gráficos, entre outros elementos 
+visuais. A View recebe dados do Model para exibi-los e também envia informações do usuário para o Controller. Geralmente, as Views são implementadas usando tecnologias 
+como HTML, CSS, JavaScript, JSP, Thymeleaf, entre outras.
+
+3. Controller:
+O Controller é responsável por receber as requisições do usuário, processá-las e coordenar as ações apropriadas. Ele atua como intermediário entre a View e o Model. 
+O Controller é responsável por receber os dados da View, interagir com o Model para executar ações necessárias, como buscar dados, atualizar informações, executar 
+lógica de negócio, etc., e então retornar os resultados para a View. Normalmente, os Controllers são implementados como classes ou métodos em frameworks web, como 
+Spring MVC, ASP.NET MVC, Django, entre outros.
+
+No contexto da arquitetura MVC, o Service (ou Service Layer) é responsável por abrigar a lógica de negócio da aplicação. Ele atua como uma camada intermediária entre 
+o Controller e o Model, encapsulando as regras e operações complexas relacionadas ao domínio do problema. O Service é uma prática comum em muitas implementações de MVC
+e tem como objetivo principal separar a lógica de negócio do Controller e do Model, mantendo assim a responsabilidade de cada camada de forma clara e modular.
+
+No contexto da arquitetura MVC, o DAO (Data Access Object) ou Repository é responsável por encapsular a interação com o banco de dados e fornecer métodos para realizar 
+operações de persistência e recuperação de dados. O DAO/Repository atua como uma camada de abstração entre o Model e o banco de dados, permitindo que o restante da 
+aplicação trabalhe com objetos do Model sem se preocupar com detalhes específicos de acesso aos dados. Em resumo, o DAO/Repository na estrutura MVC é responsável por 
+encapsular a lógica de acesso aos dados do banco de dados, fornecendo métodos para realizar operações de persistência e recuperação de dados. Ele abstrai os detalhes 
+de acesso ao banco de dados, permite consultas customizadas e promove a testabilidade das operações de dados.
+
+O fluxo básico de funcionamento da arquitetura MVC é o seguinte:
+
+1. O usuário interage com a View, como preenchendo um formulário ou clicando em um botão.
+2. A View captura as interações do usuário e envia uma requisição para o Controller correspondente.
+3. O Controller recebe a requisição, processa-a e interage com o Model, se necessário, para executar as ações apropriadas.
+4. O Model executa as operações de manipulação de dados e lógica de negócio necessárias.
+5. O Controller recebe os resultados do Model e seleciona a View adequada para renderizar os dados.
+6. A View recebe os dados do Controller e os apresenta ao usuário de forma adequada.
+7. O usuário visualiza os resultados na View e, se necessário, inicia uma nova interação.
+
+Essa separação de responsabilidades facilita a manutenção, a reutilização de código e o desenvolvimento colaborativo, uma vez que cada componente possui uma função 
+claramente definida. Além disso, a arquitetura MVC permite uma maior flexibilidade, pois é possível alterar a View ou o Model independentemente um do outro, desde que 
+a interface entre eles seja mantida.
+
+Vale ressaltar que existem variações e adaptações do padrão MVC, como o MVVM (Model-View-ViewModel) e o MVP (Model-View-Presenter), que incorporam diferentes abordagens 
+para atender a necessidades específicas de diferentes frameworks e tecnologias. No entanto, a ideia fundamental de separação de responsabilidades entre Model, View e 
+Controller permanece como base em várias arquiteturas de software.
+
+--------------------------------------------------------------------------------------------------- // --------------------------------------------------------------------------
+
+Bom Saber:
+
+A propriedade "spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults" é uma configuração específica do Hibernate, um framework de mapeamento objeto-relacional para Java, 
+quando usado em conjunto com o Spring Framework.
+
+Essa propriedade determina se o Hibernate deve usar os metadados padrão do JDBC (Java Database Connectivity) ao criar tabelas temporárias durante a execução de consultas. Quando 
+definida como "false", o Hibernate irá desabilitar o uso dos metadados padrão do JDBC e, em vez disso, irá usar seus próprios metadados para a criação das tabelas temporárias.
+
+Essa configuração pode ser útil em certos casos em que o comportamento padrão do Hibernate com relação às tabelas temporárias não atende aos requisitos específicos do aplicativo. 
+Ao desabilitar o uso dos metadados padrão do JDBC, você pode ter um controle mais preciso sobre a criação e configuração dessas tabelas temporárias.
+
+É importante destacar que essa é apenas uma das várias propriedades de configuração disponíveis no Hibernate e no Spring Framework, e seu efeito exato dependerá do contexto em 
+que está sendo utilizada, assim como das outras configurações do aplicativo. Recomenda-se consultar a documentação oficial do Hibernate e do Spring Framework para obter informações 
+mais detalhadas sobre o uso dessa propriedade e outras configurações relacionadas.
+
+------------- // -------------
+
+A propriedade "spring.jpa.properties.hibernate.dialect" é utilizada para configurar o dialeto (dialect) do Hibernate ao trabalhar com um banco de dados específico. Neste caso em 
+particular, o valor definido para a propriedade é "org.hibernate.dialect.PostgreSQLDialect", indicando que o Hibernate deve utilizar o dialeto do PostgreSQL.
+
+O dialeto do Hibernate é responsável por fornecer as instruções SQL específicas do banco de dados que estão sendo utilizadas. Cada banco de dados possui suas próprias particularidades 
+e diferenças na sintaxe e recursos SQL. Portanto, é necessário configurar corretamente o dialeto do Hibernate para que ele possa gerar as consultas SQL adequadas e compatíveis 
+com o banco de dados em uso.
+
+Ao definir "org.hibernate.dialect.PostgreSQLDialect" como o valor dessa propriedade, o Hibernate irá gerar as consultas SQL específicas para o PostgreSQL. O dialeto do PostgreSQL 
+é otimizado para trabalhar com esse banco de dados em particular, aproveitando os recursos e as funcionalidades específicas oferecidas pelo PostgreSQL.
+
+É importante observar que o Hibernate oferece uma variedade de dialetos para diferentes bancos de dados, e a escolha correta do dialeto a ser usado depende do banco de dados que 
+está sendo utilizado em sua aplicação. Se você estiver usando um banco de dados diferente do PostgreSQL, será necessário fornecer o dialeto apropriado correspondente ao seu banco 
+de dados específico.
+
+------------- // -------------
+
+A anotação `@ComponentScan` é uma anotação do Spring Framework que é usada para especificar os pacotes base a serem verificados em busca de componentes gerenciados pelo Spring, 
+como classes anotadas com `@Component`, `@Service`, `@Repository` ou `@Controller`.
+
+A anotação `@ComponentScan` é usada em conjunto com a anotação `@Configuration` ou `@SpringBootApplication` para definir a configuração do contexto do Spring e permitir que o 
+Spring encontre automaticamente e registre os componentes dentro dos pacotes especificados.
+
+No exemplo dado, a anotação `@ComponentScan(basePackages = {"projeto.*"})` está configurada para escanear os pacotes que possuem o prefixo "projeto.". Isso significa que o Spring 
+irá percorrer esses pacotes em busca de classes anotadas com `@Component`, `@Service`, `@Repository` ou `@Controller` para serem registradas como beans gerenciados pelo Spring.
+
+Essa anotação é útil quando você possui componentes personalizados que precisam ser reconhecidos e gerenciados pelo Spring, permitindo que você aproveite a injeção de dependência, 
+a configuração automática e outros recursos do Spring Framework.
+
+Você pode ajustar os pacotes especificados no array `basePackages` para corresponder aos pacotes relevantes do seu projeto. Além disso, você também pode usar outras opções, como 
+`basePackageClasses` para especificar as classes base ou `value` como um alias para `basePackages`.
+
+Em resumo, a anotação `@ComponentScan` permite ao Spring encontrar automaticamente componentes em pacotes específicos e registrá-los como beans gerenciados pelo Spring. Isso 
+facilita o desenvolvimento e configuração de aplicativos Spring, pois você não precisa registrar manualmente cada componente individualmente.
+
