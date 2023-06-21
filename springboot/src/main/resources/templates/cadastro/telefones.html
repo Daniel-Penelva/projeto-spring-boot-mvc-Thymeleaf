@@ -43,7 +43,7 @@ color:white;
     <h3>Cadastro de Telefone</h3>
     
     <div class="row">
-	    <form action="@{/addfonepessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12">
+	    <form th:action="@{/addfonepessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12">
 	    	<div class="row">
 	    		<div class="input-field col s6">
 	    		    <i class="material-icons prefix">phone</i>
@@ -53,7 +53,7 @@ color:white;
 	    		
 	    		<div class="input-field col s6">
 	    			<label class="active" for="campotipo">Tipo:</label>
-	    			<input id="campotipo" name="numero" class="validate">
+	    			<input id="campotipo" name="tipo" class="validate">
 	    		</div>
 	    		
 	    		<input type="submit" value="Adicionar" class="waves-effect waves-light btn">

@@ -14,13 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import projeto.springboot.model.Pessoa;
+import projeto.springboot.model.Telefone;
 import projeto.springboot.repository.PessoaRepository;
+import projeto.springboot.repository.TelefoneRepository;
 
 @Controller
 public class PessoaController {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private TelefoneRepository telefoneRepository;
 
 	
 	/**  O código abaixo trata-se de uma requisição HTTP GET para a URL "/cadastropessoa" e retorna uma visualização (view) chamada 
@@ -299,6 +304,51 @@ public class PessoaController {
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
 		modelAndView.addObject("pessoaobj", pessoa.get());
 
+		return modelAndView;
+	}
+	
+	
+	/**
+	 * O código aabaixo trata-se de uma requisição HTTP POST para a URL "2asteristicos/addfonepessoa/{pessoaid}", onde "{pessoaid}" 
+	 * é um parâmetro dinâmico que representa o ID da pessoa. O método adiciona um telefone à pessoa especificada, salva o telefone no 
+	 * banco de dados e retorna uma visualização (view) chamada "cadastro/telefones" com os dados atualizados da pessoa.
+	 * 
+	 * A anotação @PostMapping indica que o método addFonePessoa() será executado apenas para requisições POST. A URL 
+	 * "/addfonepessoa/{pessoaid}" é mapeada, onde "" é utilizado como um curinga para representar qualquer número de diretórios 
+	 * ou subdiretórios antes de "/addfonepessoa/{pessoaid}". "{pessoaid}" é um parâmetro dinâmico que será extraído da URL.
+	 * 
+	 * O parâmetro Telefone telefone representa o objeto Telefone que será enviado no corpo da requisição POST. O parâmetro 
+	 * @PathVariable("pessoaid") Long pessoaid indica que o valor do parâmetro "{pessoaid}" na URL será atribuído à variável 
+	 * pessoaid do tipo Long.
+	 * 
+	 * Esse código "pessoaRepository.findById(pessoaid).get()" busca a pessoa no banco de dados utilizando o método findById() do 
+	 * pessoaRepository. O ID da pessoa é passado como parâmetro para a busca. O resultado é armazenado em um objeto 
+	 * Optional<Pessoa>, e então é chamado o método get() para obter a instância de Pessoa. Em seguida, o objeto Pessoa é associado 
+	 * ao objeto Telefone definindo-o como o valor do atributo pessoa.
+	 * 
+	 * O objeto Telefone com a pessoa associada é salvo no banco de dados utilizando o método save() do telefoneRepository.
+	 * 
+	 * A classe ModelAndView é utilizada para representar uma visualização (view) que será renderizada e retornada como resposta 
+	 * para o cliente. Nesse caso, a visualização é definida como "cadastro/telefones".
+	 * 
+	 * O objeto Pessoa é adicionado ao objeto ModelAndView com o nome "pessoaobj". Isso permite que os dados da pessoa sejam
+	 * acessados e exibidos na visualização "cadastro/telefones".
+	 * 
+	 * Por fim, o objeto ModelAndView é retornado como resultado do método. Isso significa que a visualização "cadastro/telefones" 
+	 * será renderizada e retornada como resposta para o cliente que fez a requisição POST. A visualização exibirá os dados 
+	 * atualizados da pessoa, incluindo o telefone adicionado.
+	 * */
+	
+	@PostMapping("**/addfonepessoa/{pessoaid}")
+	public ModelAndView addFonePessoa(Telefone telefone, @PathVariable("pessoaid") Long pessoaid) {
+		
+		Pessoa pessoa = pessoaRepository.findById(pessoaid).get();
+		telefone.setPessoa(pessoa);
+		
+		telefoneRepository.save(telefone);
+	
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		modelAndView.addObject("pessoaobj", pessoa);
 		return modelAndView;
 	}
 
