@@ -357,6 +357,10 @@ O objetivo em editar a pessoa é buscar os valores da pessoa e jogar na tela, pa
 carregado através do controller na declaração do nome "objectpessoa". E para conseguir editar esse objeto vai precisar do id na tela e vamos utilizar o thymeleaf para isso, no 
 caso, o atributo "field" fará essa função de especificar qual o id está sendo atualizado.
 
+------------- // -------------
 
+Na action do formulario telefone temos que passar a chave da pessoa para poder relacionar o telefone ao determinado código da pessoa. Ou seja, temos que pegar o id da pessoa e
+enviar junto com os dados do telefone para que na hora de salvar o novo telefone possa passar para o cadastro de telefone o código da pessoa e ele poder salvar no banco de dados.
+ 
 
  

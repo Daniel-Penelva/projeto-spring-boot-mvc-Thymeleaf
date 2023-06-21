@@ -29,7 +29,7 @@ color:white;
 </head>
 <body>
 
-    <h3>Dados da Pessoa</h3>
+    <h3>Dados Pessoal</h3>
     
     <div th:each="p : ${pessoaobj}">
     	<div class="row">
@@ -40,8 +40,30 @@ color:white;
     	</div>
     </div>
     
-     <a href="/cadastropessoa" class="waves-effect waves-light btn">Acessar Cadastro</a>
-	
+    <h3>Cadastro de Telefone</h3>
+    
+    <div class="row">
+	    <form action="@{/addfonepessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12">
+	    	<div class="row">
+	    		<div class="input-field col s6">
+	    		    <i class="material-icons prefix">phone</i>
+	    			<label class="active" for="camponumero">Número:</label>
+	    			<input id="camponumero" name="numero" class="validate">
+	    		</div>
+	    		
+	    		<div class="input-field col s6">
+	    			<label class="active" for="campotipo">Tipo:</label>
+	    			<input id="campotipo" name="numero" class="validate">
+	    		</div>
+	    		
+	    		<input type="submit" value="Adicionar" class="waves-effect waves-light btn">
+	    		
+	    		<a href="/cadastropessoa" class="waves-effect waves-light btn">Acessar Cadastro</a>
+	    	</div>
+	    </form>
+    </div>
+    
+    
  <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" src="/materialize/js/materialize.js"></script>
 <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
