@@ -34,6 +34,12 @@ public class PessoaController {
 	 * 
 	 * Esse código adiciona um objeto chamado "pessoaobj" ao ModelAndView. O objeto Pessoa() está sendo criado e atribuído a esse objeto, 
 	 * possivelmente para ser utilizado posteriormente na visualização.
+	 * 
+	 * O código "pessoaRepository.findAll()" faz uma busca no banco de dados utilizando o método findAll() do pessoaRepository. O resultado 
+	 * dessa busca é armazenado em uma variável do tipo Iterable<Pessoa>, que representa uma lista de pessoas.
+	 * 
+	 * A lista de pessoas é adicionada ao objeto ModelAndView com o nome "pessoas". Isso permite que a lista seja acessada e exibida na 
+	 * visualização "cadastro/cadastropessoa". Ou seja, a lista vai ser criada no momento que acessar o cadastropessoa.
 	 * */
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
@@ -41,6 +47,10 @@ public class PessoaController {
 
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaobj", new Pessoa());
+		
+		Iterable<Pessoa> pessoaIt = pessoaRepository.findAll();
+		modelAndView.addObject("pessoas", pessoaIt);
+		
 		return modelAndView;
 	}
 
@@ -130,7 +140,6 @@ public class PessoaController {
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 
 		Iterable<Pessoa> pessoaIt = pessoaRepository.findAll();
-
 		modelAndView.addObject("pessoas", pessoaIt);
 		modelAndView.addObject("pessoaobj", new Pessoa());
 
@@ -251,6 +260,18 @@ public class PessoaController {
 		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa));
 		modelAndView.addObject("pessoaobj", new Pessoa());
 		
+		return modelAndView;
+	}
+	
+	
+	@GetMapping("/telefones/{idpessoa}")
+	public ModelAndView telefones(@PathVariable("idpessoa") Long idpessoa) {
+
+		Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa);
+
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		modelAndView.addObject("pessoaobj", pessoa.get());
+
 		return modelAndView;
 	}
 
