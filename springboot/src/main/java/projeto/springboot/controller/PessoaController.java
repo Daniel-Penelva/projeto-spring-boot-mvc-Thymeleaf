@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -169,6 +170,46 @@ public class PessoaController {
 
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaobj", pessoa.get());
+
+		return modelAndView;
+	}
+	
+	/**
+	 * O código abaixo trata-se de uma requisição HTTP GET para a URL "/removerpessoa/{idpessoa}", onde "{idpessoa}" é um parâmetro dinâmico 
+	 * que representa o ID da pessoa a ser removida. O método realiza a exclusão da pessoa no banco de dados e retorna uma visualização 
+	 * (view) chamada "cadastro/cadastropessoa" com a lista atualizada de pessoas.
+	 * 
+	 * A anotação @GetMapping é uma abreviação de @RequestMapping(method = RequestMethod.GET), indicando que o método excluir() será 
+	 * executado apenas para requisições GET. A URL "/removerpessoa/{idpessoa}" é mapeada, onde "{idpessoa}" é um parâmetro dinâmico que 
+	 * será extraído da URL.
+	 * 
+	 * O parâmetro @PathVariable("idpessoa") Long idpessoa indica que o valor do parâmetro "{idpessoa}" na URL será atribuído à variável 
+	 * idpessoa do tipo Long.
+	 * 
+	 * Esse código "pessoaRepository.deleteById(idpessoa)" realiza a exclusão da pessoa no banco de dados utilizando o método deleteById() 
+	 * do pessoaRepository. O ID da pessoa é passado como parâmetro para a exclusão.
+	 * 
+	 * A classe ModelAndView é utilizada para representar uma visualização (view) que será renderizada e retornada como resposta para o 
+	 * cliente. Nesse caso, a visualização é definida como "cadastro/cadastropessoa".
+	 * 
+	 * A lista atualizada de pessoas é adicionada ao objeto ModelAndView com o nome "pessoas". Isso permite que a lista seja acessada e 
+	 * exibida na visualização "cadastro/cadastropessoa", mostrando as pessoas restantes após a exclusão.
+	 * 
+	 * Um objeto vazio do tipo Pessoa é adicionado ao objeto ModelAndView com o nome "pessoaobj". Isso é utilizado na  visualização para 
+	 * exibir um formulário vazio para o cadastro de uma nova pessoa.
+	 * 
+	 * Por fim, o objeto ModelAndView é retornado como resultado do método. Isso significa que a visualização "cadastro/cadastropessoa" 
+	 * será renderizada e retornada como resposta para o cliente que fez a requisição GET. A visualização exibirá a lista atualizada de 
+	 * pessoas após a exclusão e um formulário vazio para o cadastro de uma nova pessoa.
+	 * */
+	@GetMapping("/removerpessoa/{idpessoa}")
+	public ModelAndView excluir(@PathVariable("idpessoa") Long idpessoa) {
+
+		pessoaRepository.deleteById(idpessoa);
+
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		modelAndView.addObject("pessoas", pessoaRepository.findAll());
+		modelAndView.addObject("pessoaobj", new Pessoa());
 
 		return modelAndView;
 	}
