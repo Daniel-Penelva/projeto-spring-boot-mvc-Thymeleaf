@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import projeto.springboot.model.Pessoa;
@@ -202,6 +204,7 @@ public class PessoaController {
 	 * será renderizada e retornada como resposta para o cliente que fez a requisição GET. A visualização exibirá a lista atualizada de 
 	 * pessoas após a exclusão e um formulário vazio para o cadastro de uma nova pessoa.
 	 * */
+	
 	@GetMapping("/removerpessoa/{idpessoa}")
 	public ModelAndView excluir(@PathVariable("idpessoa") Long idpessoa) {
 
@@ -211,6 +214,43 @@ public class PessoaController {
 		modelAndView.addObject("pessoas", pessoaRepository.findAll());
 		modelAndView.addObject("pessoaobj", new Pessoa());
 
+		return modelAndView;
+	}
+	
+	
+	/**
+	 * O código abaixo trata-se de uma requisição HTTP POST para a URL "2asteristicos/pesquisarpessoa" e realiza uma pesquisa de pessoas 
+	 * com base em um parâmetro de nome. O método retorna uma visualização (view) chamada "cadastro/cadastropessoa" com os resultados da 
+	 * pesquisa.
+	 * 
+	 * A anotação @PostMapping indica que o método pesquisar() será executado apenas para requisições POST. A URL "/pesquisarpessoa" é 
+	 * mapeada, onde "" é utilizado como um curinga para representar qualquer número de diretórios ou subdiretórios antes de "/pesquisarpessoa".
+	 * 
+	 * O parâmetro @RequestParam("nomepesquisa") String nomepesquisa indica que o valor do parâmetro "nomepesquisa" enviado no corpo da 
+	 * requisição será atribuído à variável nomepesquisa do tipo String.
+	 * 
+	 * A classe ModelAndView é utilizada para representar uma visualização (view) que será renderizada e retornada como resposta para o 
+	 * cliente. Nesse caso, a visualização é definida como "cadastro/cadastropessoa".
+	 * 
+	 * O método findPessoaByName(nomepesquisa) é chamado no objeto pessoaRepository para buscar as pessoas com base no nome informado. O 
+	 * resultado da pesquisa, que é uma lista de pessoas correspondentes, é adicionado ao objeto ModelAndView com o nome "pessoas". Isso 
+	 * permite que a lista seja acessada e exibida na visualização "cadastro/cadastropessoa".
+	 * 
+	 * Um objeto vazio do tipo Pessoa é adicionado ao objeto ModelAndView com o nome "pessoaobj". Isso provavelmente é utilizado na 
+	 * visualização para exibir um formulário vazio para o cadastro de uma nova pessoa.
+	 * 
+	 * Por fim, o objeto ModelAndView é retornado como resultado do método. Isso significa que a visualização "cadastro/cadastropessoa" 
+	 * será renderizada e retornada como resposta para o cliente que fez a requisição POST. A visualização exibirá os resultados da 
+	 * pesquisa de pessoas com base no nome informado, além de um formulário vazio para o cadastro de uma nova pessoa.
+	 * */
+	
+	@PostMapping("**/pesquisarpessoa")
+	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa));
+		modelAndView.addObject("pessoaobj", new Pessoa());
+		
 		return modelAndView;
 	}
 
