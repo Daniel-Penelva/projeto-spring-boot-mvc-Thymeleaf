@@ -346,4 +346,17 @@ Como estava antes:
 
 "idpessoa" é a variavel onde vai ser capturado o id da pessoa. Essa variavel vai ser passada como parametro no método GET no editar para que possamos recuperar os objetos 
 (os dados) da pessoa para poder jogar na tela e alterar.
+
+Em tela:
+<form action="salvarpessoa" method="post" th:object="${pessoaobj}">
+
+No controller:
+modelAndView.addObject("pessoaobj", pessoa.get());
+
+O objetivo em editar a pessoa é buscar os valores da pessoa e jogar na tela, para isso vamos utilizar a propriedade "object" na tag do formulário onde esse objeto vai ser 
+carregado através do controller na declaração do nome "objectpessoa". E para conseguir editar esse objeto vai precisar do id na tela e vamos utilizar o thymeleaf para isso, no 
+caso, o atributo "field" fará essa função de especificar qual o id está sendo atualizado.
+
+
+
  
