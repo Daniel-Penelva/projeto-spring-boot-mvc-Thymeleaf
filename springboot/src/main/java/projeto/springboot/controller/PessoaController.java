@@ -264,6 +264,33 @@ public class PessoaController {
 	}
 	
 	
+	/**
+	 * O código abaixo trata-se de uma requisição HTTP GET para a URL "/telefones/{idpessoa}", onde "{idpessoa}" é um 
+	 * parâmetro dinâmico que representa o ID da pessoa. O método retorna uma visualização (view) chamada "cadastro/telefones" 
+	 * com os dados da pessoa.
+	 * 
+	 * A anotação @GetMapping é uma abreviação de @RequestMapping(method = RequestMethod.GET), indicando que o método 
+	 * telefones() será executado apenas para requisições GET. A URL "/telefones/{idpessoa}" é mapeada, onde "{idpessoa}" é 
+	 * um parâmetro dinâmico que será extraído da URL.
+	 * 
+	 * O parâmetro @PathVariable("idpessoa") Long idpessoa indica que o valor do parâmetro "{idpessoa}" na URL será atribuído 
+	 * à variável idpessoa do tipo Long.
+	 * 
+	 * Esse código "pessoaRepository.findById(idpessoa)" busca uma pessoa no banco de dados utilizando o método findById() 
+	 * do pessoaRepository. O ID da pessoa é passado como parâmetro para a busca. O resultado é armazenado em um objeto 
+	 * Optional<Pessoa>, que representa uma pessoa opcional, ou seja, pode ou não existir no banco de dados.
+	 * 
+	 * A classe ModelAndView é utilizada para representar uma visualização (view) que será renderizada e retornada como 
+	 * resposta para o cliente. Nesse caso, a visualização é definida como "cadastro/telefones".
+	 * 
+	 * O objeto Pessoa obtido do Optional<Pessoa> é adicionado ao objeto ModelAndView com o nome "pessoaobj". Isso permite 
+	 * que os dados da pessoa sejam acessados e exibidos na visualização "cadastro/telefones".
+	 * 
+	 * Por fim, o objeto ModelAndView é retornado como resultado do método. Isso significa que a visualização 
+	 * "cadastro/telefones" será renderizada e retornada como resposta para o cliente que fez a requisição GET. A 
+	 * visualização exibirá os dados da pessoa carregada do banco de dados, permitindo assim a visualização dos telefones 
+	 * relacionados àquela pessoa.
+	 * */
 	@GetMapping("/telefones/{idpessoa}")
 	public ModelAndView telefones(@PathVariable("idpessoa") Long idpessoa) {
 
