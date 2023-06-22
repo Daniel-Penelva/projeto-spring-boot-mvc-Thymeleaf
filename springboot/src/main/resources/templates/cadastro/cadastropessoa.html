@@ -30,6 +30,12 @@ color:white;
 <body>
 
     <h3>Formulário de Cadastro de Pessoas</h3>
+    
+    <br />
+       <div th:each="m : ${msg}">
+      	<span th:text = ${m}></span>
+       </div>
+    <br />
    
    <div class="row">
 		<form action="salvarpessoa" id="formpessoa" method="post" th:object="${pessoaobj}" class="col s12">

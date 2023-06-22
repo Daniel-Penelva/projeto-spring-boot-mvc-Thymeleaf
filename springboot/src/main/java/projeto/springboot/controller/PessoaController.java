@@ -1,9 +1,15 @@
 package projeto.springboot.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,9 +75,39 @@ public class PessoaController {
 	 * O parâmetro do método Pessoa pessoa indica que ele espera receber um objeto do tipo Pessoa no corpo da requisição. O framework 
 	 * Spring MVC irá realizar a conversão dos parâmetros da requisição para o objeto Pessoa.
 	 * 
+	 * "if(bindingResult.hasErrors()) {"
+	 * Esta linha verifica se ocorreram erros de validação no objeto associado ao bindingResult. O bindingResult é um objeto que 
+	 * contém os resultados da validação de um formulário enviado pelo usuário. Se houver erros de validação, o código dentro do 
+	 * bloco if será executado.
+	 * 
+	 * ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+	 * Uma instância de ModelAndView é criada com o nome da view "cadastro/cadastropessoa". Isso indica que após a execução do 
+	 * método, a resposta será renderizada usando essa view.
+	 * 
+	 * Iterable<Pessoa> pessoaIt = pessoaRepository.findAll();
+	 * modelAndView.addObject("pessoas", pessoaIt);
+	 * modelAndView.addObject("pessoaobj", pessoa);
+	 * Aqui, o código está buscando todas as instâncias de Pessoa do repositório (usando o Spring Data JPA) e adicionando-as ao 
+	 * ModelAndView. A variável pessoas será disponibilizada na view para ser usada na renderização, assim como o objeto pessoaobj 
+	 * que provavelmente contém uma instância de Pessoa relacionada ao formulário de cadastro.
+	 * 
+	 * Neste trecho, um objeto ArrayList chamado msg é criado para armazenar as mensagens de erro de validação. O loop for 
+	 * percorre todos os erros presentes no bindingResult e adiciona as mensagens de erro ao msg. Essas mensagens são definidas 
+	 * por anotações como @NotNull e @NotEmpty nas propriedades da classe Pessoa.
+	 * 
+	 * modelAndView.addObject("msg", msg);
+	 * return modelAndView;
+	 * Aqui, o msg contendo as mensagens de erro é adicionado ao ModelAndView. Essas mensagens estarão disponíveis na view para 
+	 * serem exibidas ao usuário. Em seguida, o ModelAndView é retornado, indicando qual view será renderizada como resposta à 
+	 * requisição.
+	 * 
+	 * Em resumo, esse script verifica se ocorreram erros de validação no formulário enviado pelo usuário. Se houver erros, ele 
+	 * configura as informações necessárias (como mensagens de erro e objetos relacionados) e retorna um ModelAndView com essas 
+	 * informações para renderização na view "cadastro/cadastropessoa".
+	 * 
 	 * Esse código "pessoaRepository.save(pessoa);" salva a entidade Pessoa no repositório, utilizando o objeto pessoaRepository. 
-	 * que é uma instância de um objeto que implementa a interface PessoaRepository, responsável por acessar e manipular os dados de pessoas
-	 * no banco de dados.
+	 * que é uma instância de um objeto que implementa a interface PessoaRepository, responsável por acessar e manipular os dados 
+	 * de pessoas no banco de dados.
 	 * 
 	 * Após salvar a pessoa no repositório, é criado um objeto ModelAndView com a visualização "cadastro/cadastropessoa". Em seguida, é 
 	 * feita uma busca por todas as pessoas no repositório através do método findAll() do pessoaRepository. O resultado dessa busca é 
@@ -101,8 +137,25 @@ public class PessoaController {
 	 * */
 	
 	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa")
-	public ModelAndView salvar(Pessoa pessoa) {
+	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
 
+		if(bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+			
+			Iterable<Pessoa> pessoaIt = pessoaRepository.findAll();
+			modelAndView.addObject("pessoas", pessoaIt);
+			modelAndView.addObject("pessoaobj",pessoa);
+			
+			List<String> msg = new ArrayList<String>();
+			
+			for(ObjectError objectError : bindingResult.getAllErrors()) {
+				msg.add(objectError.getDefaultMessage()); // msg que virão da anotação NotNull e NotEmpty
+			}
+			
+			modelAndView.addObject("msg", msg); 
+			return modelAndView;
+		}
+		
 		pessoaRepository.save(pessoa);
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
