@@ -291,6 +291,11 @@ public class PessoaController {
 	 * O objeto Pessoa obtido do Optional<Pessoa> é adicionado ao objeto ModelAndView com o nome "pessoaobj". Isso permite 
 	 * que os dados da pessoa sejam acessados e exibidos na visualização "cadastro/telefones".
 	 * 
+	 * modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
+	 * Outro objeto chamado "telefones" é adicionado ao "ModelAndView". O valor desse objeto é obtido chamando um método 
+	 * getTelefones(pessoaid) no repositório de "Telefone". Esse método retorna uma lista de telefones associados à pessoa com o 
+	 * ID fornecido.
+	 * 
 	 * Por fim, o objeto ModelAndView é retornado como resultado do método. Isso significa que a visualização 
 	 * "cadastro/telefones" será renderizada e retornada como resposta para o cliente que fez a requisição GET. A 
 	 * visualização exibirá os dados da pessoa carregada do banco de dados, permitindo assim a visualização dos telefones 
@@ -303,6 +308,7 @@ public class PessoaController {
 
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
 		modelAndView.addObject("pessoaobj", pessoa.get());
+		modelAndView.addObject("telefones", telefoneRepository.getTelefones(idpessoa));
 
 		return modelAndView;
 	}
@@ -334,6 +340,11 @@ public class PessoaController {
 	 * O objeto Pessoa é adicionado ao objeto ModelAndView com o nome "pessoaobj". Isso permite que os dados da pessoa sejam
 	 * acessados e exibidos na visualização "cadastro/telefones".
 	 * 
+	 * modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
+	 * Outro objeto chamado "telefones" é adicionado ao "ModelAndView". O valor desse objeto é obtido chamando um método 
+	 * getTelefones(pessoaid) no repositório de "Telefone". Esse método retorna uma lista de telefones associados à pessoa com o 
+	 * ID fornecido.
+	 * 
 	 * Por fim, o objeto ModelAndView é retornado como resultado do método. Isso significa que a visualização "cadastro/telefones" 
 	 * será renderizada e retornada como resposta para o cliente que fez a requisição POST. A visualização exibirá os dados 
 	 * atualizados da pessoa, incluindo o telefone adicionado.
@@ -349,6 +360,7 @@ public class PessoaController {
 	
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
 		modelAndView.addObject("pessoaobj", pessoa);
+		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
 		return modelAndView;
 	}
 
