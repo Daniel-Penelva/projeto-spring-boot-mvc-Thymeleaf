@@ -363,5 +363,63 @@ public class PessoaController {
 		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
 		return modelAndView;
 	}
+	
+	
+	/**
+	 * @GetMapping("/removertelefone/{idtelefone}")
+	 * Esta é uma anotação que mapeia uma requisição HTTP GET para o URL especificado. O URL é definido como 
+	 * "/removertelefone/{idtelefone}", onde "{idtelefone}" é uma variável de caminho que será capturada e usada como um parâmetro 
+	 * no método.
+	 * 
+	 * public ModelAndView excluirTelefone(@PathVariable("idtelefone") Long idtelefone)
+	 * Este é o método em si. Ele é chamado quando a requisição GET é feita para o URL mapeado. Ele possui um parâmetro 
+	 * @PathVariable("idtelefone") Long idtelefone, que indica que o valor da variável de caminho "{idtelefone}" deve ser atribuído 
+	 * ao parâmetro "idtelefone".
+	 * 
+	 * Pessoa pessoa = telefoneRepository.findById(idtelefone).get().getPessoa();
+	 * Nesta linha, o código está usando um repositório (usando o Spring Data JPA) para buscar um objeto "Telefone" com base no ID 
+	 * fornecido. O método findById(idtelefone) retorna um objeto "Optional<Telefone>", e o método get() é chamado para obter a 
+	 * instância real do objeto "Telefone". Em seguida, é chamado o método getPessoa() para obter a entidade "Pessoa" associada ao 
+	 * telefone.
+	 * 
+	 * telefoneRepository.deleteById(idtelefone);
+	 * Esta linha exclui o objeto "Telefone" do banco de dados com base no ID fornecido. O método deleteById(idtelefone) é chamado 
+	 * no repositório para executar a exclusão.
+	 * 
+	 * ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+	 * Uma instância de "ModelAndView" é criada com o nome da view "cadastro/telefones". Isso indica que após a execução do método, 
+	 * a resposta será renderizada usando essa view.
+	 * 
+	 * modelAndView.addObject("pessoaobj", pessoa);
+	 * Um objeto "pessoaobj" é adicionado ao "ModelAndView" com o valor do objeto "Pessoa" recuperado anteriormente. Esse objeto 
+	 * estará disponível na view para ser usado na renderização.
+	 * 
+	 * modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoa.getId()));
+	 * Outro objeto chamado "telefones" é adicionado ao "ModelAndView". O valor desse objeto é obtido chamando um método 
+	 * getTelefones(pessoa.getId()) no repositório de "Telefone". Presumivelmente, esse método retorna uma lista de telefones 
+	 * associados à pessoa com o ID recuperado anteriormente.
+	 * 
+	 * return modelAndView;
+	 * Por fim, o "ModelAndView" é retornado, indicando qual view será renderizada como resposta à requisição.
+	 * 
+	 * Em resumo, esse script representa um método de um controlador que é acionado quando uma requisição GET é feita para o URL 
+	 * "/removertelefone/{idtelefone}". Ele recebe o ID de um telefone a ser excluído, busca o objeto "Telefone" correspondente no 
+	 * banco de dados, exclui-o, configura os objetos necessários para a renderização da view e retorna um "ModelAndView" com 
+	 * esses objetos.
+	 * */
+	
+	@GetMapping("/removertelefone/{idtelefone}")
+	public ModelAndView excluirTelefone(@PathVariable("idtelefone") Long idtelefone) {
+
+	    Pessoa pessoa =	telefoneRepository.findById(idtelefone).get().getPessoa();
+		
+		telefoneRepository.deleteById(idtelefone);
+
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		modelAndView.addObject("pessoaobj", pessoa);
+		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoa.getId()));
+
+		return modelAndView;
+	}
 
 }
