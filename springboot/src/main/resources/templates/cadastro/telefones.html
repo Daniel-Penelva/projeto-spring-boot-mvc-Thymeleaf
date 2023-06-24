@@ -29,6 +29,13 @@ color:white;
 </head>
 <body>
 
+<br />
+   <div th:each="m : ${msg}">
+    <i class="material-icons prefix" style="color:red; padding:5px;">report_problem</i>
+   	<span th:text = ${m}></span>
+   </div>
+<br />
+    
     <h3>Dados Pessoal</h3>
     
     <div th:each="p : ${pessoaobj}">
@@ -43,7 +50,8 @@ color:white;
     <h3>Cadastro de Telefone</h3>
     
     <div class="row">
-	    <form th:action="@{/addfonepessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12">
+	    <form th:action="@{/addfonepessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12" 
+	    onsubmit="return validarCampos()? true : false">
 	    	<div class="row">
 	    		<div class="input-field col s6">
 	    		    <i class="material-icons prefix">phone</i>
@@ -83,6 +91,24 @@ color:white;
  <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" src="/materialize/js/materialize.js"></script>
 <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+
+<script type="text/javascript">
+	function validarCampos(){
+		numero = document.getElementById('camponumero').value;
+		tipo = document.getElementById('campotipo').value;
+		
+		if(numero === ''){
+			alert("Informe o número de telefone!");
+			return false;
+			
+		}else if(tipo === ''){
+			alert("Informe o tipo de telefone!");
+			return false;
+		}
+		
+		return true;
+	}
+</script>
 
 </body>
 </html>

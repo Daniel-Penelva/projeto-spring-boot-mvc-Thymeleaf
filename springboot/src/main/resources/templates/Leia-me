@@ -361,6 +361,32 @@ caso, o atributo "field" fará essa função de especificar qual o id está send
 
 Na action do formulario telefone temos que passar a chave da pessoa para poder relacionar o telefone ao determinado código da pessoa. Ou seja, temos que pegar o id da pessoa e
 enviar junto com os dados do telefone para que na hora de salvar o novo telefone possa passar para o cadastro de telefone o código da pessoa e ele poder salvar no banco de dados.
- 
 
+------------- // -------------
+
+A anotação `@Valid` e a classe `BindingResult` estão relacionadas à validação de dados em um framework como o Spring MVC. Vou explicar cada um deles:
+
+A anotação `@Valid` é usada para indicar que um objeto deve ser validado de acordo com as regras de validação definidas em sua classe. Ao marcar um parâmetro de método com 
+`@Valid`, você está instruindo o framework a executar a validação desse objeto antes de prosseguir com o processamento do método.
+
+Por exemplo, suponha que você tenha uma classe `Pessoa` com campos como nome, idade, email, etc., e tenha definido anotações de validação em alguns desses campos, como 
+`@NotNull`, `@NotEmpty`, `@Email`, etc. Ao usar `@Valid` no parâmetro `Pessoa pessoa` do método, você está solicitando ao framework para validar automaticamente os dados dessa 
+pessoa com base nas anotações de validação definidas em sua classe.
+
+A classe `BindingResult` é uma classe fornecida pelo framework que contém os resultados da validação. Ela é usada em conjunto com a anotação `@Valid`. Após a validação do objeto 
+marcado com `@Valid`, o `BindingResult` é usado para verificar se ocorreram erros de validação e para acessar informações sobre esses erros.
+
+Por exemplo, você pode usar o `BindingResult` para verificar se há erros de validação chamando o método `hasErrors()`. Se houver erros, você pode acessar cada erro individualmente 
+usando métodos como `getAllErrors()` para obter uma lista de todos os erros, `getFieldErrors()` para obter apenas os erros de campo específicos ou `getGlobalErrors()` para obter 
+erros globais relacionados ao objeto em geral.
+
+O `BindingResult` também fornece métodos para acessar informações adicionais sobre os erros, como as mensagens de erro padrão definidas nas anotações de validação 
+(`getDefaultMessage()`), o nome do campo associado a um erro (`getField()`), o valor rejeitado (`getRejectedValue()`), entre outros.
+
+Em resumo, a anotação `@Valid` instrui o framework a validar um objeto com base em suas anotações de validação, enquanto a classe `BindingResult` é usada para obter os resultados 
+dessa validação, incluindo informações sobre erros de validação encontrados. 
+
+------------- // -------------
+
+Vale ressaltar que se validar do lado do cliente (utilizando o javascript) não utiliza recurso do servidor, ou seja, gera menos impacto comparado ao que foi validado do lado do servidor (controller).
  

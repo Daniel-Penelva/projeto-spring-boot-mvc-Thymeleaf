@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -367,7 +368,7 @@ public class PessoaController {
 	}
 	
 	
-	/**
+	/** Cadastrar Telefone
 	 * O código aabaixo trata-se de uma requisição HTTP POST para a URL "2asteristicos/addfonepessoa/{pessoaid}", onde "{pessoaid}" 
 	 * é um parâmetro dinâmico que representa o ID da pessoa. O método adiciona um telefone à pessoa especificada, salva o telefone no 
 	 * banco de dados e retorna uma visualização (view) chamada "cadastro/telefones" com os dados atualizados da pessoa.
@@ -384,6 +385,17 @@ public class PessoaController {
 	 * pessoaRepository. O ID da pessoa é passado como parâmetro para a busca. O resultado é armazenado em um objeto 
 	 * Optional<Pessoa>, e então é chamado o método get() para obter a instância de Pessoa. Em seguida, o objeto Pessoa é associado 
 	 * ao objeto Telefone definindo-o como o valor do atributo pessoa.
+	 * 
+	 * É criado uma condição que verifica se o objeto "telefone não é nulo, e verifica se o número do telefone está vazio ou se o tipo do telefone está vazio.
+	 * Dentro da condição tem implementado: 
+	 *  -> Um objeto ModelAndView é criado, apontando para a página "cadastro/telefones".
+	 *  -> São adicionados dois objetos ao ModelAndView: "pessoaobj" (que parece ser um objeto referente a uma pessoa) e "telefones" (que parece ser uma lista de telefones 
+	 *     relacionados a essa pessoa).
+	 *  -> Uma lista de mensagens de erro é criada, com uma única mensagem que diz "Número de telefone deve ser informado!".
+	 *  -> A lista de mensagens de erro é adicionada ao ModelAndView com o nome "msg".
+	 *  -> O ModelAndView é retornado para ser processado pela estrutura do Spring MVC e exibir a página de cadastro de telefones com a mensagem de erro.
+	 *  -> Essa verificação e tratamento de erro são realizados para garantir que o número do telefone seja fornecido adequadamente antes de prosseguir com o processamento do 
+	 *     formulário de cadastro. Caso o número do telefone não seja informado corretamente, a página de cadastro é exibida novamente, permitindo ao usuário corrigir o erro.
 	 * 
 	 * O objeto Telefone com a pessoa associada é salvo no banco de dados utilizando o método save() do telefoneRepository.
 	 * 
@@ -407,11 +419,33 @@ public class PessoaController {
 	public ModelAndView addFonePessoa(Telefone telefone, @PathVariable("pessoaid") Long pessoaid) {
 		
 		Pessoa pessoa = pessoaRepository.findById(pessoaid).get();
-		telefone.setPessoa(pessoa);
 		
-		telefoneRepository.save(telefone);
-	
+		if(telefone != null && telefone.getNumero().isEmpty() || telefone.getTipo().isEmpty()) {
+			
+			ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+			
+			modelAndView.addObject("pessoaobj", pessoa);
+			modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
+			
+			List<String> msg = new ArrayList<String>();
+			
+			if(telefone.getNumero().isEmpty()) {
+				msg.add("Número de telefone deve ser informado!");
+			}
+			
+			if(telefone.getTipo().isEmpty()) {
+				msg.add("Tipo de telefone deve ser informado!");
+			}
+			
+			modelAndView.addObject("msg", msg);
+			return modelAndView;
+		}
+		
+		
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		telefone.setPessoa(pessoa);
+		telefoneRepository.save(telefone);
+		
 		modelAndView.addObject("pessoaobj", pessoa);
 		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
 		return modelAndView;
