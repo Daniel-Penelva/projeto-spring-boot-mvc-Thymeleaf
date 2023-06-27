@@ -388,5 +388,165 @@ dessa validação, incluindo informações sobre erros de validação encontrado
 
 ------------- // -------------
 
-Vale ressaltar que se validar do lado do cliente (utilizando o javascript) não utiliza recurso do servidor, ou seja, gera menos impacto comparado ao que foi validado do lado do servidor (controller).
+Vale ressaltar que se validar do lado do cliente (utilizando o javascript) não utiliza recurso do servidor, ou seja, gera menos impacto comparado ao que foi validado do lado do 
+servidor (controller).
+
+---------------------------------------------------------------------------------- // -------------------------------------------------------------------------------------------
+
+                                                                 < Configurando Spring Security em memória >
+
+A classe `WebSecurityConfigurerAdapter` é uma classe fornecida pelo Spring Security que fornece uma configuração básica para a segurança de aplicativos web. Ela é uma classe 
+abstrata que pode ser estendida para personalizar a configuração de segurança do aplicativo.
+
+Ao estender a classe `WebSecurityConfigurerAdapter` e sobrescrever seus métodos, você pode definir as regras de segurança para o seu aplicativo, como autenticação, autorização e 
+configurações específicas do protocolo HTTP.
+
+A classe `WebSecurityConfigurerAdapter` possui vários métodos que podem ser sobrescritos para personalizar a configuração de segurança. Alguns dos métodos mais comumente usados 
+incluem:
+
+- `configure(AuthenticationManagerBuilder auth)`: permite configurar o mecanismo de autenticação do aplicativo. Você pode definir as fontes de autenticação, como banco de dados, 
+                                                  serviço LDAP ou provedor de autenticação personalizado.
+
+- `configure(HttpSecurity http)`: permite configurar as regras de autorização e configurações específicas do protocolo HTTP. Você pode definir quais URLs exigem autenticação, 
+                                  quais papéis de usuário têm acesso a determinadas URLs, configurações de sessão, proteção CSRF, CORS e outras configurações de segurança.
+
+- `configure(WebSecurity web)`: permite configurar a segurança para recursos específicos do Spring Security, como o Ignorar configuração para recursos estáticos (CSS, JavaScript, etc.).
+
+- `userDetailsService()`: retorna uma instância de `UserDetailsService`, que pode ser usada para personalizar a autenticação baseada em banco de dados ou outras fontes de dados.
+
+Ao estender a classe `WebSecurityConfigurerAdapter` e sobrescrever esses métodos, você pode fornecer a configuração personalizada para a segurança do seu aplicativo, adaptando-a 
+às suas necessidades específicas.
+
+
+Essa classe é amplamente utilizada para configurar a segurança em aplicativos web Spring, permitindo a definição de políticas de autenticação e autorização de forma flexível e 
+adaptável.
+
+------------- // ------------- 
  
+A anotação `@Configuration` é uma anotação fornecida pelo Spring Framework que indica que uma classe é uma classe de configuração. Essa anotação é usada para configurar e definir 
+beans no contexto de aplicativos Spring.
+
+Quando uma classe é anotada com `@Configuration`, ela é tratada como uma fonte de definições de configuração para o aplicativo. Isso significa que a classe contém métodos que são 
+responsáveis por criar e configurar beans do Spring, que são objetos gerenciados pelo contêiner do Spring.
+
+Os principais pontos a serem observados sobre a anotação `@Configuration` são:
+
+1. Identificação de Classe de Configuração: A anotação `@Configuration` informa ao Spring que a classe é uma classe de configuração. Isso significa que ela contém definições e 
+                                            configurações para o aplicativo.
+
+2. Métodos Anotados com `@Bean`: Dentro de uma classe anotada com `@Configuration`, você pode ter métodos anotados com `@Bean`. Esses métodos são responsáveis por criar e 
+                                 configurar os beans do Spring. O retorno desses métodos é o objeto que será gerenciado pelo contêiner do Spring.
+
+3. Criação de Beans: Os métodos anotados com `@Bean` retornam objetos que são gerenciados pelo contêiner do Spring. Esses objetos podem ser instâncias de classes próprias, 
+                     componentes de terceiros ou até mesmo objetos criados manualmente.
+
+4. Injeção de Dependências: A anotação `@Configuration` trabalha em conjunto com outras anotações do Spring, como `@Autowired`, permitindo a injeção de dependências nos beans 
+                            criados. Isso facilita a configuração e a conexão de diferentes componentes do aplicativo.
+
+Em resumo, a anotação `@Configuration` é usada para marcar uma classe como uma classe de configuração no contexto do Spring. Essa anotação permite a definição e configuração de 
+beans do Spring por meio de métodos anotados com `@Bean`, permitindo a criação de objetos gerenciados pelo contêiner do Spring e a configuração de dependências entre eles.
+
+------------- // ------------- 
+
+A anotação `@EnableWebSecurity` é uma anotação fornecida pelo Spring Security que habilita a segurança web no aplicativo. Essa anotação é usada em conjunto com a classe de 
+configuração que estende `WebSecurityConfigurerAdapter` para configurar as medidas de segurança no aplicativo.
+
+Quando você adiciona a anotação `@EnableWebSecurity` em sua classe de configuração, você está ativando a segurança web fornecida pelo Spring Security. Isso permite que você 
+defina regras de segurança, configure autenticação e autorização, e aplique outras medidas de proteção em seu aplicativo web.
+
+A anotação `@EnableWebSecurity` habilita o módulo de segurança web do Spring Security e, por padrão, cria uma instância do filtro `springSecurityFilterChain`. Esse filtro é 
+responsável por interceptar e processar as requisições HTTP, aplicando as configurações de segurança definidas na classe de configuração.
+
+Além disso, a anotação `@EnableWebSecurity` também permite a personalização da configuração de segurança através da sobrescrita do método `configure` na classe que estende 
+`WebSecurityConfigurerAdapter`. Esse método permite que você defina as regras de autenticação, autorização e outras configurações de segurança específicas para o seu aplicativo.
+
+Em resumo, a anotação `@EnableWebSecurity` é usada para habilitar a segurança web no aplicativo Spring utilizando o Spring Security. Ela permite que você configure as medidas de 
+segurança, como autenticação e autorização, e personalize as configurações de segurança do aplicativo web.
+
+------------- // ------------- 
+
+O script representa um método sobrescrito chamado `configure` na classe que estende `WebSecurityConfigurerAdapter`. Esse método é usado para configurar as regras de segurança para 
+o aplicativo web.
+
+Explicação de cada linha do script:
+
+1. `@Override`: Essa anotação indica que o método está sobrescrevendo um método da classe pai.
+
+2. `protected void configure(HttpSecurity http) throws Exception`: Este é o cabeçalho do método `configure` que recebe um objeto `HttpSecurity`. O `HttpSecurity` é usado para 
+                                                                   configurar as regras de segurança do aplicativo.
+
+3. `http.csrf().disable()`: Desabilita a proteção CSRF (Cross-Site Request Forgery), que é uma medida de segurança para prevenir ataques de falsificação de solicitação entre 
+                            sites. Neste caso, a proteção CSRF está sendo desabilitada.
+
+4. `authorizeRequests()`: Inicia a configuração das regras de autorização.
+
+5. `antMatchers(HttpMethod.GET, "/").permitAll()`: Permite que todas as solicitações GET para a raiz ("/") sejam acessadas sem autenticação. Isso significa que a página inicial 
+                                                   do aplicativo estará acessível para todos.
+
+6. `anyRequest().authenticated()`: Requer autenticação para qualquer outra solicitação que não tenha sido configurada anteriormente. Isso significa que, para todas as outras 
+                                   solicitações que não são GET para a raiz, é necessária autenticação.
+
+7. `formLogin().permitAll()`: Permite que todas as solicitações de login (formulário de login) sejam acessadas sem autenticação. Isso significa que a página de login estará 
+                              acessível para todos.
+
+8. `logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))`: Configura o logout para a URL "/logout". Quando uma solicitação GET ou POST é feita para essa URL, o 
+                                                                          usuário será desconectado e redirecionado para a página de login.
+
+Em resumo, esse método de configuração define as regras de segurança para o aplicativo web. Ele desabilita a proteção CSRF, permite o acesso sem autenticação à página inicial e 
+ao formulário de login, requer autenticação para todas as outras solicitações e configura a URL de logout.
+
+------------- // -------------
+
+Esse script representa um método sobrescrito chamado `configure` na classe que estende `WebSecurityConfigurerAdapter`. Esse método é usado para configurar o gerenciador de 
+autenticação para o aplicativo web.
+
+Explicação de cada linha do script:
+
+1. `@Override`: Essa anotação indica que o método está sobrescrevendo um método da classe pai.
+
+2. `protected void configure(AuthenticationManagerBuilder auth) throws Exception`: Este é o cabeçalho do método `configure` que recebe um objeto `AuthenticationManagerBuilder`. 
+                                                                                   O `AuthenticationManagerBuilder` é usado para configurar o gerenciador de autenticação do aplicativo.
+
+3. `auth.inMemoryAuthentication()`: Configura a autenticação em memória, o que significa que as informações de autenticação serão armazenadas em memória.
+
+4. `passwordEncoder(NoOpPasswordEncoder.getInstance())`: Configura o codificador de senha a ser usado para autenticação em memória. Neste caso, está sendo utilizado 
+                                                         `NoOpPasswordEncoder`, que não faz nenhuma codificação ou hash na senha. No entanto, o uso de `NoOpPasswordEncoder` não 
+                                                         é recomendado em ambientes de produção, pois as senhas ficam expostas em texto simples. É preferível utilizar um 
+                                                         codificador seguro, como BCryptPasswordEncoder.
+
+5. `withUser("admin")`: Define um usuário com o nome "admin".
+
+6. `password("123")`: Define a senha do usuário como "123".
+
+7. `roles("ADMIN")`: Atribui a função (role) "ADMIN" ao usuário. Essa função pode ser usada para restringir o acesso a determinadas partes do aplicativo com base nas permissões 
+                     associadas a essa função.
+
+Em resumo, esse método de configuração define um gerenciador de autenticação em memória para o aplicativo web. Ele cria um usuário com nome "admin", senha "123" e atribui a 
+função "ADMIN" a esse usuário. Esse usuário pode ser usado para autenticação durante o processo de login do aplicativo. É importante observar que esse exemplo de autenticação em 
+memória é apenas para fins de demonstração e não é adequado para um ambiente de produção, onde é recomendado o uso de um sistema de autenticação mais robusto, como autenticação 
+baseada em banco de dados ou integração com provedores de autenticação externos.
+
+------------- // -------------
+
+Esse script representa um método chamado `configure` na classe que estende `WebSecurityConfigurerAdapter`. Esse método é usado para 
+configurar a segurança para recursos estáticos específicos que estão fora do escopo da segurança do Spring Security.
+
+Explicação do script:
+
+1. `public void configure(WebSecurity web) throws Exception`: Este é o cabeçalho do método `configure` que recebe um objeto `WebSecurity`. O `WebSecurity` é usado para configurar 
+                                                              a segurança para recursos estáticos.
+
+2. `web.ignoring()`: Indica que determinados recursos estáticos devem ser ignorados pela configuração de segurança do Spring Security.
+
+3. `antMatchers("/materialize/**")`: Especifica os padrões de URL que correspondem aos recursos estáticos que devem ser ignorados. Nesse caso, os recursos que correspondem a 
+                                     qualquer URL que comece com "/materialize/" serão ignorados.
+
+Ao usar `web.ignoring().antMatchers(...)`, você está instruindo o Spring Security a ignorar a aplicação de regras de segurança para os recursos estáticos especificados. Isso 
+significa que qualquer solicitação para os recursos estáticos correspondentes não será interceptada pelo Spring Security e não exigirá autenticação ou autorização.
+
+No exemplo fornecido, os recursos estáticos sob o diretório "/materialize" estão sendo ignorados pela configuração de segurança. Isso pode ser útil quando você tem bibliotecas 
+ou arquivos CSS, JavaScript ou imagens que não precisam ser protegidos pela segurança do Spring Security.
+
+É importante observar que, ao configurar a segurança para recursos estáticos, você deve garantir que esses recursos não contenham informações confidenciais ou restritas, pois 
+eles não serão protegidos pelo Spring Security.
+
