@@ -550,3 +550,63 @@ ou arquivos CSS, JavaScript ou imagens que não precisam ser protegidos pela seg
 É importante observar que, ao configurar a segurança para recursos estáticos, você deve garantir que esses recursos não contenham informações confidenciais ou restritas, pois 
 eles não serão protegidos pelo Spring Security.
 
+---------------------------------------------------------------------------------- // -------------------------------------------------------------------------------------------
+      < Estrutura de classes Spring Security com Banco de Dados >
+
+              1
+         ____________                    __________________
+        | UserDetails |                  | UserRepository |
+        |_____________|                  |________________|
+               ^                               ^  |
+               |                               |  |
+               |                               |  |
+               |                               |  v
+         _________                        _____________________
+        | Usuario |                       | UserDetailsService |
+        |[tabela] | --------------------  |____________________|
+        |_________|          |
+                         Web Security
+ 
+
+
+O `UserDetails` é uma interface do Spring Security que define os detalhes de um usuário autenticado no sistema. Essa interface fornece informações necessárias para o Spring 
+Security realizar a autenticação e autorização.
+
+A interface `UserDetails` define os seguintes métodos que devem ser implementados:
+
+- `Collection<? extends GrantedAuthority> getAuthorities()`: Retorna uma coleção de objetos `GrantedAuthority`, que representam as permissões ou papéis (roles) do usuário autenticado.
+
+- `String getPassword()`: Retorna a senha do usuário. É importante notar que, por razões de segurança, o retorno desse método geralmente é a senha criptografada ou codificada de 
+                          alguma forma.
+
+- `String getUsername()`: Retorna o nome de usuário do usuário autenticado.
+
+- `boolean isAccountNonExpired()`: Indica se a conta do usuário não está expirada.
+
+- `boolean isAccountNonLocked()`: Indica se a conta do usuário não está bloqueada.
+
+- `boolean isCredentialsNonExpired()`: Indica se as credenciais do usuário (por exemplo, senha) não estão expiradas.
+
+- `boolean isEnabled()`: Indica se a conta do usuário está habilitada.
+
+2. **Implementação da interface UserDetails:**
+
+Normalmente, você implementa a interface `UserDetails` em uma classe de usuário personalizada que representa os detalhes de um usuário autenticado em seu sistema. Essa classe 
+geralmente contém informações como nome de usuário, senha, permissões, papéis (roles) e outros atributos relacionados ao usuário.
+
+3. **Utilização do UserDetails no processo de autenticação e autorização:**
+
+Ao usar o Spring Security, os objetos `UserDetails` são normalmente retornados pelo `UserDetailsService`, que é uma interface usada para carregar os detalhes do usuário a partir 
+de uma origem de dados, como um banco de dados. O `UserDetailsService` é responsável por fornecer os detalhes do usuário com base em um nome de usuário fornecido durante o 
+processo de autenticação.
+
+Os detalhes do usuário fornecidos pelo `UserDetailsService` são então usados pelo Spring Security para autenticar o usuário e verificar as permissões e restrições de acesso.
+
+Essa estrutura do `UserDetails` no Spring Security permite que você personalize o processo de autenticação e autorização, fornecendo informações específicas do usuário no 
+contexto do seu sistema.
+
+Lembre-se de que a implementação específica da interface `UserDetails` pode variar dependendo do seu sistema e da forma como você deseja armazenar e gerenciar os detalhes do 
+usuário. É possível personalizar a implementação para se adequar às necessidades do seu aplicativo, como integração com um banco de dados de usuários ou um provedor de 
+autenticação externo.
+
+
