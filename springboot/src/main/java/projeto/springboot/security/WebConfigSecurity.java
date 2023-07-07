@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -18,11 +19,11 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		/* linha 27 - Desativa as configurações padrão de memória.
-		 * linha 28 - Permitir restringir acessos.
-		 * linha 29 - Qualquer usuário acessa a página principal.
-		 * linha 31 - Permite qualquer usuário
-		 * linha 32 - Mapeia URL de logout e invalida usuário autenticado  */
+		/* linha 28 - Desativa as configurações padrão de memória.
+		 * linha 29 - Permitir restringir acessos.
+		 * linha 30 - Qualquer usuário acessa a página principal.
+		 * linha 32 - Permite qualquer usuário
+		 * linha 33 - Mapeia URL de logout e invalida usuário autenticado  */
 		
 		http.csrf()
 		.disable()
@@ -37,9 +38,9 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 	// Cria autenticação do usuário com banco de dados ou em memória
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance())
+		auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
 		.withUser("admin")
-		.password("123")
+		.password("$2a$10$t73SPdIn7BadIcSACXLsp.nHwwtTXZnY/4bRZFZCy5.kwZQo7CiZW")
 		.roles("ADMIN");
 	}
 	
