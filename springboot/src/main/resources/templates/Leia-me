@@ -628,4 +628,52 @@ dados, utilizando a sintaxe do Spring Data JPA ou outros recursos fornecidos pel
 Essa abordagem do CrudRepository do Spring Data simplifica o desenvolvimento de operações de persistência básicas, tornando mais fácil e produtivo o trabalho com o banco de dados 
 em aplicativos Spring.
 
+------------- // -------------
 
+A classe UserDetailsService é uma interface do Spring Security que define um contrato para carregar os detalhes de um usuário a partir de uma origem de dados, como um banco de dados, para fins de autenticação e autorização.
+
+Aqui estão alguns pontos importantes sobre a classe UserDetailsService do Spring Security:
+
+Objetivo do UserDetailsService:
+O objetivo principal do UserDetailsService é carregar os detalhes do usuário com base em um nome de usuário fornecido durante o processo de autenticação. Esses detalhes são então 
+usados pelo Spring Security para autenticar o usuário e verificar as permissões e restrições de acesso.
+
+Método loadUserByUsername:
+A interface UserDetailsService define um único método chamado loadUserByUsername. Esse método é responsável por carregar os detalhes do usuário com base em um nome de usuário.
+
+O método recebe um parâmetro username que representa o nome de usuário do usuário a ser carregado. Ele retorna um objeto UserDetails que contém os detalhes do usuário, como nome 
+de usuário, senha e permissões.
+
+Se o usuário não for encontrado, o método loadUserByUsername deve lançar uma exceção UsernameNotFoundException para indicar que o usuário não existe.
+
+Implementação do UserDetailsService:
+Para utilizar a classe UserDetailsService, você precisa criar uma classe que implemente essa interface e fornecer uma implementação do método loadUserByUsername que carregue os 
+detalhes do usuário da sua origem de dados, como um banco de dados.
+
+------------- // ---------------
+
+A fins de Estudo:
+A anotação @Autowired é uma anotação do Spring Framework que é usada para realizar a injeção de dependência automaticamente em classes e componentes.
+
+A injeção de dependência é um padrão de projeto amplamente utilizado que permite a criação de componentes independentes e facilita a manutenção, o teste e a reutilização de código. 
+Com a injeção de dependência, as dependências de um objeto são fornecidas por um mecanismo externo, em vez de serem criadas ou gerenciadas internamente pelo objeto.
+
+Ao usar a anotação @Autowired, você está indicando ao Spring que deseja que ele resolva e injete automaticamente as dependências para você.
+
+Existem várias maneiras de usar a anotação @Autowired:
+  1. Injeção de Dependência em Construtor;
+  2. Injeção de Dependência em Método Setter;
+  3. Injeção de Dependência em Atributo;
+
+Lembre-se de que para que a injeção de dependência ocorra, é necessário que a classe a ser injetada (dependência) seja gerenciada pelo Spring, ou seja, também precisa estar 
+anotada com @Component, @Service, @Repository ou outras anotações específicas do Spring.
+
+Em resumo, a anotação @Autowired é usada para realizar a injeção de dependência automaticamente pelo Spring Framework, simplificando o processo de gerenciamento de dependências 
+em um aplicativo Spring.
+
+------------- // ---------------
+
+Para testar vamos fazer um insert no usuário no banco de dados:
+INSERT INTO public.usuario(
+            id, login, senha)
+    VALUES (1, 'admin', '$2a$10$t73SPdIn7BadIcSACXLsp.nHwwtTXZnY/4bRZFZCy5.kwZQo7CiZW');

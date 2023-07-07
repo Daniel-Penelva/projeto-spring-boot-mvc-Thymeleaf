@@ -1,5 +1,6 @@
 package projeto.springboot.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +15,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	private ImplementacaoUserDetailsService implementacaoUserDetailsService;
 	
 	// Configura as solicitações acesso por Http - http://localhost:8080/login?logout
 	@Override
@@ -38,10 +42,14 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 	// Cria autenticação do usuário com banco de dados ou em memória
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		
+		auth.userDetailsService(implementacaoUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+		
+		/*
 		auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
 		.withUser("admin")
 		.password("$2a$10$t73SPdIn7BadIcSACXLsp.nHwwtTXZnY/4bRZFZCy5.kwZQo7CiZW")
-		.roles("ADMIN");
+		.roles("ADMIN");*/
 	}
 	
 	// Ignora URL específicas
