@@ -609,4 +609,23 @@ Lembre-se de que a implementação específica da interface `UserDetails` pode v
 usuário. É possível personalizar a implementação para se adequar às necessidades do seu aplicativo, como integração com um banco de dados de usuários ou um provedor de 
 autenticação externo.
 
+------------- // -------------
+
+A interface CrudRepository possui métodos padrão para realizar as operações básicas de CRUD, como salvar (save), atualizar (save), excluir (delete), buscar por ID (findById) e 
+buscar todos (findAll).
+
+Ao estender a interface CrudRepository com os tipos apropriados, você herda esses métodos e pode utilizá-los para interagir com o banco de dados de forma fácil e conveniente, 
+sem a necessidade de escrever código repetitivo.
+
+A interface UsuarioRepository estende a CrudRepository com os tipos Usuario (a entidade que representa os dados do usuário) e Long (o tipo do ID da entidade).
+
+Com isso, a interface UsuarioRepository herda automaticamente os métodos básicos de CRUD, permitindo que você execute operações de persistência, como salvar, atualizar, excluir 
+e buscar usuários no banco de dados, sem a necessidade de implementar esses métodos manualmente.
+
+Além dos métodos padrão, você também pode adicionar métodos personalizados na interface UsuarioRepository para realizar consultas mais específicas e personalizadas no banco de 
+dados, utilizando a sintaxe do Spring Data JPA ou outros recursos fornecidos pelo Spring Data.
+
+Essa abordagem do CrudRepository do Spring Data simplifica o desenvolvimento de operações de persistência básicas, tornando mais fácil e produtivo o trabalho com o banco de dados 
+em aplicativos Spring.
+
 
