@@ -800,4 +800,14 @@ INSERT INTO public.usuarios_role(
 
     
 SELECT * FROM usuarios_role;
+
+------------- // ---------------
+
+.antMatchers(HttpMethod.GET, "/cadastropessoa") especifica que a configuração a seguir se aplica ao método HTTP GET da URL "/cadastropessoa".
+
+.hasAnyRole("ADMIN") define a restrição de acesso para essa URL. A expressão hasAnyRole("ADMIN") indica que apenas usuários com a função (role) "ADMIN" têm permissão para acessar 
+essa URL.
+
+Portanto, esse script define uma regra de segurança que permite apenas usuários com a função "ADMIN" acessarem a URL "/cadastropessoa" usando o método HTTP GET. Outros usuários 
+sem essa função terão acesso negado a essa URL.
     
