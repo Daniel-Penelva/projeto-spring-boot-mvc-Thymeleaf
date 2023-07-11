@@ -677,3 +677,127 @@ Para testar vamos fazer um insert no usuário no banco de dados:
 INSERT INTO public.usuario(
             id, login, senha)
     VALUES (1, 'admin', '$2a$10$t73SPdIn7BadIcSACXLsp.nHwwtTXZnY/4bRZFZCy5.kwZQo7CiZW');
+
+------------- // ---------------
+
+Criando controle de acessos e perfil (Roles) Spring Security
+
+
+   |----------|                   |-------------|                    |----------|
+   |  User    | ----------------> |  Acessos    | <----------------- | Roles    |
+   |          |                   |-------------|                    |----------|
+   |__________|                   |  UID  | RID |                  1 |admin     |
+                                  |    1  |  1  |                  2 |secretaria|
+                                  |    1  |  2  |                    ------------
+                                   --------------
+
+
+A interface GrantedAuthority faz parte do framework Spring Security e é usada para representar uma autoridade ou permissão concedida a um usuário autenticado. Ela define o 
+contrato para classes que representam uma autoridade, ou seja, uma capacidade que um usuário possui dentro do sistema.
+
+O método getAuthority() retorna uma string que representa a autoridade. Essa string geralmente corresponde a um papel, função ou permissão específica dentro do sistema.
+
+Ao usar o Spring Security, as autoridades são associadas aos usuários autenticados e são usadas para controlar o acesso a recursos protegidos. Por exemplo, você pode ter 
+autoridades como "ROLE_ADMIN", "ROLE_USER", "PERMISSION_WRITE", etc. Essas autoridades são concedidas aos usuários durante o processo de autenticação e podem ser usadas 
+posteriormente para verificar se um usuário tem permissão para acessar determinado recurso.
+
+Além da interface GrantedAuthority, o Spring Security fornece implementações padrão, como a classe SimpleGrantedAuthority, que implementa a interface e permite criar objetos de 
+autoridade facilmente.
+
+No geral, a interface GrantedAuthority é fundamental no Spring Security para representar e controlar as autoridades e permissões concedidas aos usuários autenticados.
+
+
+----------- // -------------
+
+A anotação @JoinTable é usada em mapeamentos de relacionamentos muitos-para-muitos no contexto de mapeamento objeto-relacional em frameworks como o Hibernate. Ela define uma 
+tabela de junção que é usada para associar os registros de uma entidade com os registros de outra entidade relacionada.
+
+No caso da anotação @JoinTable(name = "usuarios_role"), a tabela de junção será criada com o nome "usuarios_role". Essa tabela será usada para associar os registros da entidade 
+atual (geralmente a classe de usuário) com os registros da entidade relacionada (geralmente a classe de função ou permissão).
+
+A anotação @JoinTable geralmente é usada em conjunto com outras anotações, como @ManyToMany ou @OneToMany, para configurar o relacionamento entre as entidades. Essas anotações 
+são usadas para definir a cardinalidade do relacionamento (muitos-para-muitos, um-para-muitos, etc.) e para especificar os campos de junção ou chaves estrangeiras usadas na 
+tabela de junção.
+
+No exemplo mencionado, a tabela de junção "usuarios_role" será criada para associar registros de usuários com registros de roles (funções ou permissões). Essa tabela de junção 
+pode conter campos adicionais, como chaves estrangeiras para identificar os registros associados e qualquer outra informação relevante para o relacionamento.
+
+É importante ressaltar que a configuração e o comportamento exato da anotação @JoinTable podem variar dependendo do framework de mapeamento objeto-relacional utilizado, como 
+Hibernate, JPA (Java Persistence API) ou Spring Data JPA. Recomenda-se consultar a documentação do framework específico que você está utilizando para obter mais detalhes sobre o 
+uso correto dessa anotação.
+
+No exemplo mencionado, a anotação @JoinTable(name = "usuarios_role", joinColumns = @JoinColumn(name="usuario_id", referencedColumnName = "id", table = "usuário")) define a tabela 
+de junção "usuarios_role" e suas colunas de junção. Vamos analisar cada parte dessa anotação:
+
+name = "usuarios_role": Especifica o nome da tabela de junção como "usuarios_role".
+
+joinColumns = @JoinColumn(name="usuario_id", referencedColumnName = "id", table = "usuário"): Define as colunas de junção da tabela de junção. Nesse caso, temos:
+
+name = "usuario_id": Especifica o nome da coluna de junção como "usuario_id". Essa coluna representa a chave estrangeira referenciando a entidade de usuário.
+
+referencedColumnName = "id": Especifica a coluna da entidade de usuário que é referenciada pela coluna de junção. Nesse caso, a coluna "id" da tabela "usuário" é referenciada 
+pela coluna "usuario_id" da tabela de junção.
+
+table = "usuário": Especifica o nome da tabela da entidade de usuário. Essa informação é necessária para mapear corretamente a coluna de junção à tabela de usuário.
+
+Essa anotação define a configuração da tabela de junção "usuarios_role" para associar registros de usuário com registros de role (funções ou permissões). A coluna "usuario_id" 
+na tabela de junção será uma chave estrangeira que faz referência à coluna "id" da tabela "usuário".
+
+A anotação `inverseJoinColumns` é usada em conjunto com a anotação `@JoinTable` em relacionamentos muitos-para-muitos no contexto de mapeamento objeto-relacional. Ela permite 
+especificar as colunas de junção da tabela de junção que correspondem à entidade relacionada.
+
+No exemplo mencionado, a anotação `inverseJoinColumns = @JoinColumn(name="role_id", referencedColumnName = "id", table = "role")` define as colunas de junção da tabela de junção 
+que estão relacionadas à entidade de "role" (função ou permissão). Vamos analisar cada parte dessa anotação:
+
+- `name = "role_id"`: Especifica o nome da coluna de junção como "role_id". Essa coluna representa a chave estrangeira referenciando a entidade de role na tabela de junção.
+
+- `referencedColumnName = "id"`: Especifica a coluna da entidade de role que é referenciada pela coluna de junção. Nesse caso, a coluna "id" da tabela "role" é referenciada pela 
+coluna "role_id" da tabela de junção.
+
+- `table = "role"`: Especifica o nome da tabela da entidade de role. Essa informação é necessária para mapear corretamente a coluna de junção à tabela de role.
+
+Essa anotação `inverseJoinColumns` é usada em conjunto com `joinColumns` para definir as colunas de junção na tabela de junção que estabelecem o relacionamento entre as entidades 
+envolvidas.
+
+No contexto do exemplo mencionado, a anotação `inverseJoinColumns` especifica as colunas de junção que se referem à entidade de role. Portanto, a tabela de junção "usuarios_role" 
+terá uma coluna "role_id" que representa a chave estrangeira que faz referência à coluna "id" da tabela "role".
+
+Lembrando que o comportamento e a configuração exata da anotação `inverseJoinColumns` podem variar dependendo do framework de mapeamento objeto-relacional utilizado, como 
+Hibernate, JPA ou Spring Data JPA. Consulte a documentação do framework específico para obter informações detalhadas sobre o uso correto dessa anotação.
+
+
+Para Melhor entendimento - Modelo Relacional:
+
+usuario(id, login, senha)
+role(id, nome_role)
+Usuarios_role(usuario_id, role_id)
+
+usuario_id referencia id da tabela usuario
+role_id referencia id da tabela role
+
+         | --------|                                 |------|
+         | Usuario |---------------------------------| Role | 
+         |_________|               |                 | _____|
+                                   |
+                                   |
+                          |----------------------|
+                          |    usuarios_role     |
+                          |______________________|
+                          
+Criando os valores na tabela do banco de dados:
+
+NSERT INTO public.role(
+            id, nome_role)
+    VALUES (1, 'ROLE_ADMIN'), (2, 'ROLE_USER'), (3, 'ROLE_GERENTE');
+
+SELECT * FROM role;
+
+SELECT * FROM usuario;
+
+INSERT INTO public.usuarios_role(
+            usuario_id, role_id)
+    VALUES (1, 1), (1,3);
+
+    
+SELECT * FROM usuarios_role;
+    
