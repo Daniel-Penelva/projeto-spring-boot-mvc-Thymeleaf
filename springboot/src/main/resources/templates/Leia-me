@@ -810,4 +810,39 @@ essa URL.
 
 Portanto, esse script define uma regra de segurança que permite apenas usuários com a função "ADMIN" acessarem a URL "/cadastropessoa" usando o método HTTP GET. Outros usuários 
 sem essa função terão acesso negado a essa URL.
+
+------------- // ---------------
+
+Corrigindo um bug:
+Esse bug se refere na unicidade UNIQUE(role_id) que especifica o tipo de restrição que está sendo adicionada, neste caso, uma restrição de chave única. Isso significa que o 
+valor da coluna "role_id" em cada registro da tabela deve ser exclusivo, ou seja, não pode haver duplicatas. Ou seja, ele gerou 
+uma chave unica apenas para o role e queremos que seja gerado uma chave unica para o usuario_id e o role_id.
+  
+  ALTER TABLE public.usuarios_role ADD CONSTRAINT uk_krvk2qx218dxa3ogdyplk0wxw UNIQUE(role_id);
+
+Logo para resolver isso, vamos no BD para apagar essa restrição e criar uma nova restrição:
+
+ALTER TABLE public.usuarios_role
+  ADD CONSTRAINT uk_krvk2qx218dxa3ogdyplk0wxw UNIQUE(role_id, usuario_id);
+  
+Com isso não poderá mais ter um usuário e um papel (role) repetido. Ou seja, o UNIQUE(role_id, usuario_id) especifica o tipo de restrição que está sendo adicionada, neste caso, 
+uma restrição de chave única composta. Isso significa que a combinação de valores das colunas "role_id" e "usuario_id" em cada registro da tabela deve ser exclusiva, ou seja, 
+não pode haver duplicatas dessa combinação de valores.
+
+Em resumo, o SQL está adicionando uma restrição de chave única composta às colunas "role_id" e "usuario_id" da tabela "usuarios_role". Isso garante que cada combinação de valores 
+nessas colunas seja única dentro da tabela, impedindo a duplicação dessa combinação específica.
+
+
+Agora eu posso criar um usuario e inserir o papel admin ou qlq outro papel desde que não se repita a mesma linha.
+
+INSERT INTO public.usuario(
+            id, login, senha)
+    VALUES (2, 'daniel', '$2a$10$WrmJJCXR4btYbqdf427EE.ch4agWV4eT6FUd24T5sEZ1xM85kh2ne');
+
+
+INSERT INTO public.usuarios_role(
+            usuario_id, role_id)
+    VALUES (2, 1),(2, 3);
+
+select * from usuarios_role;
     
