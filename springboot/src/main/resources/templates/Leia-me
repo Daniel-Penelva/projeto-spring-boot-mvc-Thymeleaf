@@ -845,4 +845,46 @@ INSERT INTO public.usuarios_role(
     VALUES (2, 1),(2, 3);
 
 select * from usuarios_role;
+
+-------------------------------------------------------------- // ---------------------------------------------------------------
+
+A interface `WebMvcConfigurer` é uma interface do Spring Framework que permite a personalização da configuração do MVC (Model-View-Controller) da aplicação web. Ela é usada para 
+configurar aspectos relacionados ao MVC, como a configuração de recursos estáticos, interceptadores, conversores, validadores, entre outros.
+
+Ao implementar a interface `WebMvcConfigurer`, é possível personalizar o comportamento padrão do Spring MVC, adicionando ou substituindo configurações específicas. Além disso, 
+essa interface permite estender a configuração existente, evitando a necessidade de substituir completamente a configuração padrão.
+
+A `WebMvcConfigurer` fornece uma série de métodos que podem ser sobrescritos para realizar as configurações desejadas. Alguns dos métodos mais comumente utilizados incluem:
+
+- `addResourceHandlers(ResourceHandlerRegistry registry)`: Permite configurar o mapeamento de recursos estáticos, como arquivos CSS, JavaScript e imagens.
+
+- `addInterceptors(InterceptorRegistry registry)`: Permite adicionar interceptadores que podem ser executados antes ou após a execução de uma requisição. Os interceptadores são 
+                                                   úteis para adicionar lógica de pré-processamento ou pós-processamento nas requisições.
+
+- `addFormatters(FormatterRegistry registry)`: Permite adicionar conversores e formatadores personalizados para tipos de dados específicos usados em formulários.
+
+- `addViewControllers(ViewControllerRegistry registry)`: Permite registrar controladores de visualização para mapear URLs diretamente para visualizações sem a necessidade de um 
+                                                         método de controlador específico.
+
+- `configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer)`: Permite configurar o comportamento padrão do servlet para lidar com solicitações que não 
+                                                                                 correspondem a nenhum mapeamento de controlador existente.
+
+Esses são apenas alguns exemplos dos métodos disponíveis na interface `WebMvcConfigurer`. Ao implementar essa interface e sobrescrever os métodos relevantes, é possível 
+personalizar e configurar o comportamento do MVC de acordo com as necessidades específicas da aplicação.
+
+------------- // ---------------
+
+Dentro desse método, estamos usando o objeto ViewControllerRegistry para configurar a rota "/login" e associá-la à visualização "/login".
+
+A linha registry.addViewController("/login").setViewName("/login"); define a rota "/login" e a associa à visualização "/login". Isso significa que quando um usuário acessar a 
+rota "/login", a visualização "/login" será retornada, sem a necessidade de um método de controle separado para lidar com essa requisição.
+
+A linha registry.setOrder(Ordered.HIGHEST_PRECEDENCE); define a ordem de prioridade para essa configuração. Neste caso, estamos definindo a ordem como a mais alta 
+(HIGHEST_PRECEDENCE), o que significa que essa configuração será aplicada antes de outras configurações de rota.
+
+Essa abordagem é útil para casos em que uma rota simples precisa ser mapeada diretamente para uma visualização sem a necessidade de lógica adicional de controle. Isso pode ser 
+útil, por exemplo, para páginas de login, páginas de erro personalizadas ou qualquer outra visualização estática que não exija processamento lógico adicional.
+
+Lembrando que a configuração exata pode variar dependendo do framework e versão específicos do Spring MVC que estão sendo utilizados. É importante consultar a documentação 
+oficial do Spring para obter informações mais detalhadas sobre a configuração de rotas e visualizações.
     
