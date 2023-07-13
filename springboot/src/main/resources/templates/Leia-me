@@ -960,6 +960,7 @@ configuração pode ser personalizada de acordo com as necessidades da aplicaç�
 
 
 OBS. Tive que modificar o CDN do Materialize CSS, pois estava gerando erro. configurar o CDN direto - Usando o link externo:
+Site: https://materializecss.com/getting-started.html
 
 <!-- MATERIALIZE -->
 <!--Import Google Icon Font-->
@@ -973,4 +974,16 @@ OBS. Tive que modificar o CDN do Materialize CSS, pois estava gerando erro. conf
 
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+-------------------------------------------------------------- // ---------------------------------------------------------------
+Consumindo Web Service RESTful CEP
+
+Links:
+https://viacep.com.br/
+https://viacep.com.br/ws/01001000/json/
+
+Adicionando o JQuey - No link vamos copiar a codificação do javascript e do html no projeto.
+https://viacep.com.br/exemplo/jquery/
+
+
 
