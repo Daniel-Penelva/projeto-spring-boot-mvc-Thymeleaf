@@ -887,4 +887,90 @@ Essa abordagem é útil para casos em que uma rota simples precisa ser mapeada d
 
 Lembrando que a configuração exata pode variar dependendo do framework e versão específicos do Spring MVC que estão sendo utilizados. É importante consultar a documentação 
 oficial do Spring para obter informações mais detalhadas sobre a configuração de rotas e visualizações.
-    
+
+-------------- // ---------------
+
+A expressão .anyRequest().authenticated() indica que todas as requisições que não foram correspondidas por regras de autorização específicas devem exigir autenticação. Isso 
+significa que qualquer requisição feita pelo usuário, exceto as que foram configuradas de forma diferente, requer autenticação para serem acessadas.
+
+Essa configuração é comumente usada para garantir que todas as rotas e recursos da aplicação estejam protegidos e exijam autenticação antes de serem acessados. Ela garante que 
+apenas usuários autenticados possam acessar as páginas e recursos protegidos.
+
+Ao usar .anyRequest().authenticated(), todas as requisições não especificadas por regras mais específicas (por exemplo, regras baseadas em funções de usuário ou URLs específicas) serão consideradas como requisições que exigem autenticação.
+
+Em resumo, esse script configura a regra de autorização para todas as requisições não correspondidas por regras específicas. Exige que todas as requisições sejam autenticadas 
+para serem acessadas. Essa configuração garante a proteção global da aplicação, exigindo autenticação para todas as partes não especificamente configuradas de forma diferente.
+
+-------------- // ---------------
+
+A expressão .and().formLogin() indica que uma configuração para o formulário de login está sendo adicionada à configuração existente.
+
+A expressão .permitAll() permite que todas as solicitações de acesso à página de login sejam permitidas sem autenticação. Isso significa que qualquer usuário, mesmo aqueles que 
+não estão autenticados, terá permissão para acessar a página de login.
+
+Essa configuração é útil para permitir que os usuários acessem a página de login e insiram suas credenciais para realizar a autenticação. Sem essa configuração, eles seriam 
+redirecionados para a página de login apenas após uma tentativa de acesso a uma página protegida.
+
+Em resumo, esse script configura o formulário de login e permite que todas as solicitações de acesso à página de login sejam permitidas sem autenticação. Isso permite que os 
+usuários acessem a página de login e forneçam suas credenciais para realizar o processo de autenticação.
+
+-------------- // ---------------
+
+A expressão .loginPage("/login") define a página de login personalizada para a aplicação. Quando um usuário não autenticado tenta acessar uma página protegida e é redirecionado 
+para a página de login, a URL "/login" será usada como página de login.
+
+A expressão .defaultSuccessUrl("/cadastropessoa") define a URL padrão para onde o usuário será redirecionado após fazer login com sucesso. Nesse caso, após o login bem-sucedido, 
+o usuário será redirecionado para a página "/cadastropessoa".
+
+A expressão .failureUrl("/login?error=true") define a URL para onde o usuário será redirecionado caso ocorra uma falha no login. Se o login não for bem-sucedido, o usuário será 
+redirecionado para a página de login novamente, mas com o parâmetro "error=true" adicionado à URL. Isso pode ser útil para exibir uma mensagem de erro ou tomar outras ações com 
+base na falha do login.
+
+Em resumo, esse script configura as páginas e URLs associadas ao processo de login. Define a página de login, a página padrão após o login bem-sucedido e a página de 
+redirecionamento em caso de falha no login. Essas configurações podem ser personalizadas de acordo com os requisitos específicos da aplicação.
+
+-------------- // ---------------
+
+A expressão .and().logout() indica que uma configuração para o logout está sendo adicionada à configuração existente.
+
+A expressão .logoutSuccessUrl("/login") define a URL para onde o usuário será redirecionado após fazer logout com sucesso. Quando o usuário realiza o logout, ele é redirecionado 
+para a página de login, que nesse caso é "/login".
+
+Essa configuração garante que, após o logout bem-sucedido, o usuário seja redirecionado para a página de login, permitindo que ele faça login novamente ou execute outras ações 
+apropriadas.
+
+Em resumo, esse script configura a URL de redirecionamento após o logout. Após o logout bem-sucedido, o usuário será redirecionado para a página de login especificada ("/login"). 
+Essa configuração pode ser personalizada de acordo com as necessidades da aplicação.
+
+-------------- // ---------------
+
+A expressão `.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))` configura a URL ("/logout") na qual o processo de logout será acionado. Isso indica que quando uma 
+requisição com a URL "/logout" for recebida, o Spring Security irá processar o logout do usuário.
+
+O uso da classe `AntPathRequestMatcher` permite especificar um padrão de URL usando padrões de correspondência Ant. No caso desse script, estamos configurando o padrão "/logout", 
+o que significa que qualquer requisição com essa URL irá acionar o processo de logout.
+
+Essa configuração é útil para personalizar a URL de logout e pode ser usada quando a URL padrão fornecida pelo Spring Security não atende aos requisitos específicos da aplicação.
+
+Em resumo, esse script configura a URL de logout para "/logout". Quando uma requisição com essa URL for recebida, o Spring Security irá processar o logout do usuário. Essa 
+configuração pode ser personalizada de acordo com as necessidades da aplicação.
+
+
+-------------- // ---------------
+
+
+OBS. Tive que modificar o CDN do Materialize CSS, pois estava gerando erro. configurar o CDN direto - Usando o link externo:
+
+<!-- MATERIALIZE -->
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+

@@ -23,21 +23,20 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		/* linha 28 - Desativa as configurações padrão de memória.
-		 * linha 29 - Permitir restringir acessos.
-		 * linha 30 - Qualquer usuário acessa a página principal.
-		 * linha 32 - Permite qualquer usuário
-		 * linha 33 - Mapeia URL de logout e invalida usuário autenticado  */
-		
 		http.csrf()
-		.disable()
-		.authorizeRequests()
-		.antMatchers(HttpMethod.GET, "/").permitAll()
-		.antMatchers(HttpMethod.GET, "/cadastropessoa").hasAnyRole("ADMIN")
+		.disable()  // Desativa as configurações padrão de memória.
+		.authorizeRequests() // Permitir restringir acessos.
+		.antMatchers(HttpMethod.GET, "/").permitAll()  // Qualquer usuário acessa a página principal.
+		//.antMatchers("/materialize/**").permitAll()  
+		.antMatchers(HttpMethod.GET, "/cadastropessoa").hasAnyRole("ADMIN")  // Permite somente que o usuário admin acesse a página '/cadastropesssoa'
 		.anyRequest().authenticated()
-		.and().formLogin().permitAll()
-		.and().logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+		.and().formLogin().permitAll()  // permite qualquer usuário
+		.loginPage("/login")  // página de login
+		.defaultSuccessUrl("/cadastropessoa")  // página padrão se efetuou o login
+		.failureUrl("/login?error=true")  // página padrão se falhou o login
+		.and().logout()  // Mapeia URL de Logout e invalida usuário autenticado
+		.logoutSuccessUrl("/login")  // página padrão após fazer o logout
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));  // Diz que o processo de logout será acionado.
 	}
 	
 	// Cria autenticação do usuário com banco de dados ou em memória
@@ -58,4 +57,6 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/materialize/**");
 	}
+	
+	
 }
