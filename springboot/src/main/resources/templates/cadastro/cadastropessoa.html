@@ -39,6 +39,7 @@ p {
 form input[type=submit] {
 	color: white;
 }
+
 </style>
 </head>
 <body>
@@ -84,6 +85,15 @@ form input[type=submit] {
 					<i class="material-icons prefix">account_circle</i>
 					<label for="campo_idade">Idade</label> 
 					<input placeholder="Entre com sua idade" id="campo_idade" type="number" class="validate" name="idade" th:field="*{idade}"> 
+				</div>
+				
+				<div class="input-field col s6" id="divSexo">
+					<label for="sexopessoa" class="active">Sexo</label>
+					<select class="browser-default" th:field="*{sexopessoa}">
+						<option value="" disabled selected>--[Selecione]--</option>
+						<option value="MASCULINO" th:text="Masculino"></option>
+						<option value="FEMININO" th:text="Feminino"></option>
+					</select>
 				</div>
 			</div>
 			

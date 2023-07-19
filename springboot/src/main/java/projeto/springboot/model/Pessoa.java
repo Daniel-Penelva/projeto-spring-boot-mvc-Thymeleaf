@@ -44,6 +44,8 @@ public class Pessoa implements Serializable {
 	private String cidade;
 	private String uf;
 	private String ibge;
+	
+	private String sexopessoa;
 
 	public Long getId() {
 		return id;
@@ -131,6 +133,14 @@ public class Pessoa implements Serializable {
 
 	public void setIbge(String ibge) {
 		this.ibge = ibge;
+	}
+	
+	public void setSexopessoa(String sexopessoa) {
+		this.sexopessoa = sexopessoa;
+	}
+	
+	public String getSexopessoa() {
+		return sexopessoa;
 	}
 
 	@Override
