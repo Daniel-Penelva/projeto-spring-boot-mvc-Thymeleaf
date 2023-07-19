@@ -986,4 +986,6 @@ Adicionando o JQuey - No link vamos copiar a codificação do javascript e do ht
 https://viacep.com.br/exemplo/jquery/
 
 
+-------------------------------------------------------------- // ---------------------------------------------------------------
 
+Para passar um parametro de pesquisa vamos utilizar a propriedade 'name' com o valor 'sexopesquisa' dentro do select do Sexo.
