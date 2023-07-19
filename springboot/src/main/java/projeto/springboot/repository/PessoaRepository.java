@@ -37,5 +37,29 @@ public interface PessoaRepository extends CrudRepository<Pessoa, Long>{
 	
 	@Query("select p from Pessoa p where p.nome like %?1% ")
 	List<Pessoa> findPessoaByName(String nome);
-
+	
+	
+	
+	/** Esse script representa um método de consulta personalizada usando a anotação `@Query` do Spring Data JPA. Ele é usado para definir uma consulta personalizada em vez de 
+	 * usar as convenções de nomenclatura padrão do Spring Data JPA.
+	 * 
+	 * `@Query("select p from Pessoa p where p.nome like %?1% and p.sexopessoa = ?2")` é a anotação `@Query` que especifica a consulta personalizada. Neste caso, a consulta 
+	 * seleciona objetos `Pessoa` da entidade `Pessoa` onde o nome corresponde parcialmente ao primeiro parâmetro (`?1`) usando o operador `like` com a expressão `%` para 
+	 * representar qualquer parte do nome. Além disso, a consulta filtra também pelo valor exato do segundo parâmetro (`?2`) na propriedade `sexopessoa`.
+	 * 
+	 * `List<Pessoa>` indica que o método retornará uma lista de objetos do tipo `Pessoa`. Essa lista contém as pessoas que correspondem aos critérios definidos na consulta 
+	 * personalizada.
+	 * 
+	 * `findPessoaByNameSexo` é o nome do método. Esse nome sugere que o método é usado para buscar pessoas com base em seus nomes e sexo.
+	 * 
+	 * `(String nome, String sexopessoa)` são os parâmetros do método. Esses parâmetros são usados para preencher os valores dos parâmetros `?1` e `?2` na consulta personalizada. 
+	 * O primeiro parâmetro (`nome`) é usado para buscar pessoas cujos nomes correspondem parcialmente ao valor fornecido. O segundo parâmetro (`sexopessoa`) é usado para buscar 
+	 * pessoas com um valor exato correspondente na propriedade `sexopessoa`.
+	 * 
+	 * Em resumo, esse script define um método de consulta personalizada que retorna uma lista de pessoas com base em critérios de nome e sexo. Ele usa a anotação `@Query` para 
+	 * especificar a consulta personalizada e os parâmetros fornecidos são usados para preencher os valores na consulta. */
+	
+	@Query("select p from Pessoa p where p.nome like %?1% and p.sexopessoa = ?2")
+	List<Pessoa> findPessoaByNameSexo(String nome, String sexopessoa);
+	
 }
