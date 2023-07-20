@@ -989,3 +989,29 @@ https://viacep.com.br/exemplo/jquery/
 -------------------------------------------------------------- // ---------------------------------------------------------------
 
 Para passar um parametro de pesquisa vamos utilizar a propriedade 'name' com o valor 'sexopesquisa' dentro do select do Sexo.
+
+-------------------------------------------------------------- // ---------------------------------------------------------------
+
+Vamos utilizar o software TIBCO JasperSoft para criar um relatorio das pessoas. Mas antes vamos fazer um jar do projeto. 
+Com o botão direito em cima da pasta src/main/java > Export > JAR file > next > Browser (seleciona o lugar para salvar o jar do projeto) > nomeia o jar 'jar-projeto-spring-boot' >
+next > next > finish.
+
+No JasperSoft vamos criar o projeto - file > new > Jasper Report > next > Escolher o Formato de relatorio (Blank A4) > 
+next > File name (esse arquivo é o código fonte do nosso relatório) - nomear de 'pessoa.jrxml' > next > 
+Data Adapter (fonte de dados) clica em 'new' escolhe a opção 'collection of javabeans' (no caso, são as classes java) > next >
+'name' coloca "Coleção de objetos projeto spring boot thymeleaf" | depois temos que fazer encontrar a Classe Pessoa, no caso vamos em 'Add' e adicionar o jar 'jar-projeto-spring-boot' |
+onde está 'The static method in the Factory that returns a Collection<?> or an array of objects' deixa o campo em branco | 
+onde está 'Factory class (the class that will produce java beans)' coloca todo o nome do pacote de modelo Pessoa 'projeto.springboot.model.Pessoa' > Finish > next > Finish
+
+Depois de criado o projeto no jaspersoft vamos fazer um 'Compile Report' para verificar se ao compilar corretamente e e em 'Dataset and Query Dialog' na opção 'Coleção de objeto' escolhe a 
+opção 'Coleção de objetos projeto spring boot thymeleaf' | depois na aba 'Java Bean' em 'Class name' clica nos três pontinhos (...) pesquisa pela nossa classe Pessoa (se não encontrar faremos o seguinte).
+
+Para encontrar a nossa classe Pessoa vamos em: Vamos com o botão direito em cima do projeto 'MyReports'(esse é o nome do projeto criado para o jaspersoft) > properties > 
+java build path > aba libraries (em Modulepath) > add External JARS... (add o jar que foi salvo do projeto) > apply > apply and close. 
+
+Agora podemos ir de novo em 'Dataset and Query Dialog' em 'Java Bean' em 'Class name' clica nos três pontinhos (...) pesquisa pela nossa classe Pessoa e quando aparecer clica nela. 
+Ao clicar nela automaticamente irá mostrar todas as propriedades dessa Classe Pessoa e vamos sublinhar apenas as propriedades que serão utilizadas e clica em 'add select fields' > ok.
+
+Basta criar o relatorio com as propriedades que deseja colocar. Depois de ter feito o relátorio temos que copiar os arquivos dentro do projeto jaspersoft. Para isso
+podemos ir em properties e clicar no caminho da pasta do projeto, nessa pasta vai ser criado dois arquivos 'pessoa.jasper' e 'pessoa.jrxml'. Vamos copiar esses arquivos e colar 
+na pasta relatorios do projeto springboot.
