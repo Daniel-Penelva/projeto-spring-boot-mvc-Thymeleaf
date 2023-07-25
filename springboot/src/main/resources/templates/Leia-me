@@ -1193,3 +1193,13 @@ post novamente. Vamos utilizar o javascript para isso.
 
 <input type="submit" value="PDF" onclick="document.getElementById('pesquisarpessoa').method = 'get'" class="waves-effect waves-light btn">
 					
+-------------------------------------------------------------- // ---------------------------------------------------------------
+Combo de profissão
+
+Criando os registros do banco de dados:
+
+INSERT INTO public.profissao(
+            id, nome)
+    VALUES (1, 'Programador Java'), (2, 'Programador PHP'), (3, 'Analista de Sistema'), (4, 'Analista de Banco de Dados'), (5, 'Programador Front-End');
+
+select * from profissao;
