@@ -1,6 +1,7 @@
 package projeto.springboot.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -526,13 +527,78 @@ public class PessoaController {
 	}
 	
 	
+	/**
+	 * O script apresenta um método chamado imprimirPDF, que é mapeado para a rota "doisasteristicos/pesquisarpessoa" usando a anotação @GetMapping. 
+	 * Esse método é responsável por realizar uma pesquisa de pessoas com base em critérios fornecidos como parâmetros de consulta (nomepesquisa e sexopesquisa) e gerar um 
+	 * relatório em formato PDF com os resultados da pesquisa.
+	 * 
+	 * Vamos analisar o funcionamento detalhado do método:
+	 * 
+	 * Parâmetros da solicitação: O método recebe três parâmetros:
+	 * -> nomepesquisa: Uma string que representa o nome da pessoa a ser pesquisada.
+	 * -> sexopesquisa: Uma string que representa o sexo da pessoa a ser pesquisada.
+	 * -> request: Objeto HttpServletRequest que representa a solicitação HTTP.
+	 * -> response: Objeto HttpServletResponse que representa a resposta HTTP.
+	 * 
+	 * Pesquisa de pessoas: Com base nos critérios de pesquisa fornecidos (nomepesquisa e sexopesquisa), o método realiza uma busca no banco de dados usando o PessoaRepository. 
+	 * Dependendo dos critérios, a busca pode ser por nome, sexo ou ambos. Se nenhum critério for fornecido, todas as pessoas são retornadas.
+	 * 
+	 * Chamada ao serviço de geração de relatório: O método chama o serviço geraRelatorio da classe ReportUtil, passando a lista de pessoas pesquisadas, o nome do 
+	 * relatório ("pessoa") e o contexto do servlet (request.getServletContext()). Esse serviço é responsável por gerar o relatório em formato PDF com base nas informações 
+	 * fornecidas.
+	 * 
+	 * Configuração da resposta: O método configura a resposta HTTP para enviar o relatório PDF gerado como um anexo para download. As configurações incluem:
+	 * -> Tamanho do conteúdo: response.setContentLength(pdf.length) - Define o tamanho do conteúdo do relatório PDF.
+	 * -> Tipo de conteúdo: response.setContentType("application/octet-stream") - Define o tipo de conteúdo como "application/octet-stream", indicando que o arquivo é binário.
+	 * -> Cabeçalho de resposta: response.setHeader(headerKey, headerValue) - Define o cabeçalho de resposta "Content-Disposition" para indicar que o arquivo deve ser tratado 
+	 *                           como um anexo para download. O nome do arquivo é definido como "relatorio.pdf".
+	 * -> Envio do relatório para o navegador: Finalmente, o relatório PDF é enviado para o navegador do usuário através do response.getOutputStream().write(pdf).
+	 * 
+	 * Esse método permite que o usuário acesse a rota "doisasteristicos/pesquisarpessoa" com os parâmetros de pesquisa (nomepesquisa e sexopesquisa) para obter um relatório 
+	 * em formato PDF com os resultados da pesquisa. O relatório é gerado dinamicamente com base nos critérios de pesquisa fornecidos e pode ser baixado pelo usuário como um 
+	 * arquivo PDF.
+	 * */
+	
 	@GetMapping("**/pesquisarpessoa")
 	public void imprimirPDF(@RequestParam("nomepesquisa") String nomepesquisa, 
 			@RequestParam("sexopesquisa") String sexopesquisa, 
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
-		System.out.println("Testando");
-	
+		List<Pessoa> pessoas = new ArrayList<Pessoa>();
+		
+		if(sexopesquisa != null && !sexopesquisa.isEmpty() && nomepesquisa != null && !nomepesquisa.isEmpty()) { // busca por nome e sexo
+			pessoas = pessoaRepository.findPessoaByNameSexo(nomepesquisa, sexopesquisa);
+			
+		}else if(nomepesquisa != null && !nomepesquisa.isEmpty()){ // busca por nome
+			pessoas = pessoaRepository.findPessoaByName(nomepesquisa);
+			
+		}else if(sexopesquisa != null && !sexopesquisa.isEmpty()){ // busca por sexo
+			pessoas = pessoaRepository.findPessoaBySexo(sexopesquisa);
+			
+		}else { // busca todos
+			Iterable<Pessoa> iterator = pessoaRepository.findAll();
+			
+			for (Pessoa pessoa: iterator) {
+				pessoas.add(pessoa);
+			}
+		}
+		
+		// Chamar o serviço que faz a geração do relatorio
+		byte[] pdf = reportUtil.geraRelatorio(pessoas, "pessoa", request.getServletContext());
+		
+		// Tamnaho da resposta
+		response.setContentLength(pdf.length);
+		
+		//Definir na resposta o tipo de arquivo
+		response.setContentType("application/octet-stream");
+		
+		// Definir o cabeçalho da resposta
+		String headerKey = "Content-Disposition";
+		String headerValue = String.format("attachment; filename=\"%s\"", "relatorio.pdf");
+		response.setHeader(headerKey, headerValue);
+		
+		// Finaliza a resposta para o navegador
+		response.getOutputStream().write(pdf);
 	}
 
 }

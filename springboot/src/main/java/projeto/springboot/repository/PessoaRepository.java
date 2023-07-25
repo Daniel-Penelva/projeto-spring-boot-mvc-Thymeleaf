@@ -40,6 +40,15 @@ public interface PessoaRepository extends CrudRepository<Pessoa, Long>{
 	
 	
 	
+	/**
+	 * O mesmo exemplo do de cima, porém a query vai consultar o sexo da pessoa.
+	 * */
+	
+	@Query("select p from Pessoa p where p.sexopessoa = ?1")
+	List<Pessoa> findPessoaBySexo(String sexo);
+	
+	
+	
 	/** Esse script representa um método de consulta personalizada usando a anotação `@Query` do Spring Data JPA. Ele é usado para definir uma consulta personalizada em vez de 
 	 * usar as convenções de nomenclatura padrão do Spring Data JPA.
 	 * 
