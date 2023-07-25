@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import projeto.springboot.model.Pessoa;
 import projeto.springboot.model.Telefone;
 import projeto.springboot.repository.PessoaRepository;
+import projeto.springboot.repository.ProfissaoRepository;
 import projeto.springboot.repository.TelefoneRepository;
 
 @Controller
@@ -39,6 +40,9 @@ public class PessoaController {
 	
 	@Autowired
 	private ReportUtil reportUtil;
+	
+	@Autowired
+	private ProfissaoRepository profissaoRepository;
 
 	
 	/**  O código abaixo trata-se de uma requisição HTTP GET para a URL "/cadastropessoa" e retorna uma visualização (view) chamada 
@@ -68,6 +72,7 @@ public class PessoaController {
 		
 		Iterable<Pessoa> pessoaIt = pessoaRepository.findAll();
 		modelAndView.addObject("pessoas", pessoaIt);
+		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		
 		return modelAndView;
 	}
@@ -161,7 +166,8 @@ public class PessoaController {
 				msg.add(objectError.getDefaultMessage()); // msg que virão da anotação NotNull e NotEmpty
 			}
 			
-			modelAndView.addObject("msg", msg); 
+			modelAndView.addObject("msg", msg);
+			modelAndView.addObject("profissoes", profissaoRepository.findAll());
 			return modelAndView;
 		}
 		
@@ -248,6 +254,7 @@ public class PessoaController {
 
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaobj", pessoa.get());
+		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 
 		return modelAndView;
 	}
