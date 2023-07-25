@@ -1185,3 +1185,11 @@ Portanto, a classe `ReportUtil` encapsula a lógica para gerar relatórios PDF a
 Spring para gerar relatórios dinâmicos com base em dados fornecidos pela aplicação. Ela simplifica a criação de relatórios e a exportação para PDF, facilitando a geração de 
 documentos impressos para os usuários da aplicação.
 
+------------ // ---------------
+
+Vale ressaltar que para gerar o PDF não pode redirecionar a página, senão ele irá perder o download. Ou seja, terei que enviar os dados (get) sem recarregar a tela.
+No botão 'PDF' vamos fazer que ao clicar se torne de post para o método get. O método get só irá funcionar ao clicar no botão PDF e depois ele irá retornar a ser
+post novamente. Vamos utilizar o javascript para isso.
+
+<input type="submit" value="PDF" onclick="document.getElementById('pesquisarpessoa').method = 'get'" class="waves-effect waves-light btn">
+					

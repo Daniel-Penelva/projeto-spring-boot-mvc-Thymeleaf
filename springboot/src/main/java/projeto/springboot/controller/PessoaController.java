@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
@@ -33,6 +35,9 @@ public class PessoaController {
 	
 	@Autowired
 	private TelefoneRepository telefoneRepository;
+	
+	@Autowired
+	private ReportUtil reportUtil;
 
 	
 	/**  O código abaixo trata-se de uma requisição HTTP GET para a URL "/cadastropessoa" e retorna uma visualização (view) chamada 
@@ -518,6 +523,16 @@ public class PessoaController {
 		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoa.getId()));
 
 		return modelAndView;
+	}
+	
+	
+	@GetMapping("**/pesquisarpessoa")
+	public void imprimirPDF(@RequestParam("nomepesquisa") String nomepesquisa, 
+			@RequestParam("sexopesquisa") String sexopesquisa, 
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		System.out.println("Testando");
+	
 	}
 
 }
