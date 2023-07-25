@@ -97,6 +97,13 @@ form input[type=submit] {
 						<option value="FEMININO" th:text="Feminino"></option>
 					</select>
 				</div>
+				
+				<div class="input-field col s6" id="divProfissao">
+					<label for="profissao" class="active">Profissao</label>
+					<select id="profissao" class="browser-default" th:field="*{profissaopessoa}">
+						<option th:each = "p: ${profissoes}" th:value="${p.id}" th:text="${p.nome}">
+					</select>
+				</div>
 			</div>
 			
 			<div class="row"> 

@@ -1203,3 +1203,32 @@ INSERT INTO public.profissao(
     VALUES (1, 'Programador Java'), (2, 'Programador PHP'), (3, 'Analista de Sistema'), (4, 'Analista de Banco de Dados'), (5, 'Programador Front-End');
 
 select * from profissao;
+
+------------ // ---------------
+
+Combo de profissão - Para Compreensão:
+
+linha de código Classe Pessoa:
+public Profissao getProfissaopessoa() {
+		return profissaopessoa;
+	}
+
+
+linha de codigo Classe PessoaController: 
+modelAndView.addObject("profissoes", profissaoRepository.findAll());
+
+A tag: 
+<select id="profissao" class="browser-default" th:field="*{profissaopessoa}">
+	<option th:each = "p: ${profissoes}" th:value="${p.id}" th:text="${p.nome}"> ...
+
+-> th:field="*{profissaopessoa}": O atributo 'profissaoPessoa' na Classe Pessoa irá ligar com o field e o que estiver selecionado na lista de opções vai ser colocado dentro da 
+                                  field 'profissaopessoa' que vai ser injetado para dentro do objeto, amarrando-o para só assim ser persistido no banco de dados.
+                                    
+-> th:each = "p: ${profissoes}": Para cada loop vai criar um valor de profissão (aponta para o objeto 'profissoes') que está como registro na tabela profissão no banco de dados.
+ 
+-> th:value="${p.id}": Tem tb o valor que vai carregar na tela e amarrar quando for salvar é sempre a primary key. Porque a tabela se liga com a primary key.
+
+-> th:text="${p.nome}": E um texto para mostrar para o usuário.
+
+
+
