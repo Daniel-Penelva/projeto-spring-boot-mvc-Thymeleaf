@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,6 +53,9 @@ public class Pessoa implements Serializable {
 	// Muitas pessoas pode ter uma profissão
 	@ManyToOne
 	private Profissao profissaopessoa;
+	
+	@Enumerated(EnumType.STRING)
+	private Cargo cargo;
 
 	public Long getId() {
 		return id;
@@ -154,6 +159,14 @@ public class Pessoa implements Serializable {
 	
 	public Profissao getProfissaopessoa() {
 		return profissaopessoa;
+	}
+	
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+	
+	public Cargo getCargo() {
+		return cargo;
 	}
 
 	@Override
