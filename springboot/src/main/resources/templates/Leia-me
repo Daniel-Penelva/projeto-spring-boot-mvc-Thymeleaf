@@ -1015,3 +1015,173 @@ Ao clicar nela automaticamente irá mostrar todas as propriedades dessa Classe P
 Basta criar o relatorio com as propriedades que deseja colocar. Depois de ter feito o relátorio temos que copiar os arquivos dentro do projeto jaspersoft. Para isso
 podemos ir em properties e clicar no caminho da pasta do projeto, nessa pasta vai ser criado dois arquivos 'pessoa.jasper' e 'pessoa.jrxml'. Vamos copiar esses arquivos e colar 
 na pasta relatorios do projeto springboot.
+
+------------ // ---------------
+
+A classe `JRBeanCollectionDataSource` faz parte da biblioteca JasperReports e é usada para criar uma fonte de dados a partir de uma coleção de objetos Java para ser usada na 
+geração de relatórios usando o JasperReports.
+
+Essa classe é útil quando você deseja criar relatórios em que os dados são originados de uma coleção de objetos Java, como uma lista de objetos. Cada objeto na coleção 
+representa um registro de dados no relatório.
+
+A seguir estão alguns conceitos importantes relacionados à classe `JRBeanCollectionDataSource`:
+
+1. Fonte de dados: A classe `JRBeanCollectionDataSource` atua como uma fonte de dados para o relatório. Ela converte a coleção de objetos Java em uma estrutura que o 
+JasperReports pode entender e processar para gerar o relatório.
+
+2. Coleção de objetos Java: A fonte de dados `JRBeanCollectionDataSource` aceita uma coleção de objetos Java, como uma lista, um conjunto ou uma matriz. Cada objeto da coleção 
+representa um registro de dados no relatório.
+
+3. Campos de dados: Cada propriedade do objeto Java na coleção é considerada como um campo de dados no relatório. Por exemplo, se a coleção contém objetos do tipo `Pessoa`, onde 
+cada objeto tem propriedades como "nome", "idade" e "endereço", essas propriedades serão tratadas como campos de dados no relatório.
+
+4. Uso no JasperReports: Uma vez criada a fonte de dados `JRBeanCollectionDataSource`, você pode passá-la para o gerador de relatórios do JasperReports, que irá processar a 
+fonte de dados e preencher o relatório com os dados da coleção.
+
+Dessa forma, a classe `JRBeanCollectionDataSource` é uma maneira eficiente e conveniente de usar coleções de objetos Java como fonte de dados para gerar relatórios usando o 
+JasperReports.
+
+------------ // ---------------
+
+A classe File faz parte do pacote java.io em Java e é usada para representar e manipular informações sobre arquivos e diretórios no sistema de arquivos do computador. Essa 
+classe fornece métodos para criar, ler, gravar, renomear, excluir e obter informações sobre arquivos e diretórios.
+
+Principais características e funcionalidades da classe File:
+
+Representação de arquivos e diretórios: A classe File pode representar tanto arquivos quanto diretórios no sistema de arquivos. Isso significa que você pode criar objetos File 
+para arquivos específicos e para diretórios que contêm outros arquivos.
+
+Manipulação de arquivos: A classe File permite criar novos arquivos, gravar dados em arquivos existentes, ler dados de arquivos e excluir arquivos.
+
+Manipulação de diretórios: Você pode criar novos diretórios, listar o conteúdo de um diretório, verificar se um caminho representa um diretório ou arquivo e excluir diretórios.
+
+Caminhos de arquivos: A classe File aceita caminhos de arquivos como argumento em seus construtores e métodos. Os caminhos podem ser absolutos (começando na raiz do sistema 
+de 
+arquivos) ou relativos (relativos ao diretório atual).
+
+Verificação de existência e permissões: A classe File fornece métodos para verificar se um arquivo ou diretório existe, se é acessível e se você tem permissão para ler ou 
+gravar nele.
+
+Manipulação de metadados: A classe File permite obter informações sobre arquivos e diretórios, como tamanho, data de modificação, permissões, caminho absoluto e muito mais.
+
+Em resumo, a classe File é uma ferramenta essencial para trabalhar com arquivos e diretórios em Java e oferece uma variedade de métodos para manipular, acessar e obter 
+informações sobre eles.
+
+------------ // ---------------
+
+A classe JasperPrint faz parte da biblioteca JasperReports e representa o resultado gerado após o preenchimento de um modelo de relatório (template) com dados. Essa classe 
+contém as informações necessárias para renderizar o relatório em diferentes formatos, como PDF, HTML, XLS (Excel), entre outros.
+
+Principais características e funcionalidades da classe JasperPrint:
+
+Representação do relatório preenchido: A classe JasperPrint armazena o resultado do preenchimento de um modelo de relatório (arquivo .jasper) com os dados fornecidos. Isso 
+inclui a estrutura do relatório, seus elementos visuais e os dados substituídos nos campos do relatório.
+
+Geração de relatórios: Após o preenchimento bem-sucedido do modelo de relatório com os dados, um objeto JasperPrint é criado, permitindo a geração do relatório em diferentes 
+formatos.
+
+Formatos de saída: A classe JasperPrint pode ser usada para renderizar o relatório em vários formatos de saída, como PDF, HTML, XLS (Excel), CSV, XML, entre outros. Isso 
+permite que o mesmo conteúdo do relatório seja exibido ou exportado em diferentes tipos de arquivos.
+
+Páginas do relatório: O objeto JasperPrint pode conter várias páginas de relatório, caso o relatório seja paginado. Cada página representa uma visualização diferente do mesmo 
+relatório, que pode conter diferentes dados ou parâmetros.
+
+Exportação do relatório: O objeto JasperPrint pode ser usado para exportar o relatório em um formato específico usando os recursos do JasperReports.
+
+Em resumo, a classe JasperPrint é uma parte crucial do JasperReports, pois representa o relatório preenchido e permite sua renderização e exportação em vários formatos para 
+exibição ou armazenamento.
+
+------------ // ---------------
+
+A classe JasperFillManager faz parte da biblioteca JasperReports e é responsável por preencher um modelo de relatório (template) com dados para criar um objeto JasperPrint, que 
+representa o relatório preenchido e pronto para ser renderizado ou exportado em diferentes formatos.
+
+Principais características e funcionalidades da classe JasperFillManager:
+
+Preenchimento de relatórios: A principal função da classe JasperFillManager é preencher um modelo de relatório com dados, criando assim um objeto JasperPrint que representa o 
+relatório preenchido.
+
+Parâmetros: Além dos dados a serem exibidos no relatório, você pode passar parâmetros adicionais para o modelo de relatório por meio do JasperFillManager. Os parâmetros podem 
+ser usados no template para personalizar o relatório ou fornecer informações adicionais.
+
+Fontes de dados: Para preencher o relatório, você precisa fornecer uma fonte de dados apropriada, geralmente representada por uma implementação da classe JRDataSource. A 
+biblioteca JasperReports oferece várias implementações prontas para uso, como JRBeanCollectionDataSource para trabalhar com coleções de objetos Java, e também permite criar 
+fontes de dados personalizadas, se necessário.
+
+Formato do relatório: O resultado do preenchimento do modelo de relatório é um objeto JasperPrint, que contém as informações necessárias para renderizar ou exportar o relatório 
+em vários formatos, como PDF, HTML, XLS (Excel) e outros.
+
+Em resumo, a classe JasperFillManager é usada para preencher modelos de relatórios com dados e criar objetos JasperPrint, que são essenciais para a geração e manipulação de 
+relatórios usando a biblioteca JasperReports.
+
+O método fillReport é um dos principais métodos da classe JasperFillManager na biblioteca JasperReports. Ele é responsável por preencher um modelo de relatório (template) com 
+dados e produzir um objeto JasperPrint, que representa o relatório preenchido e pronto para ser exibido ou exportado em diferentes formatos.
+
+Assinatura do método fillReport
+
+```
+public static JasperPrint fillReport(JasperReport jasperReport, Map<String, Object> parameters, JRDataSource dataSource) throws JRException;
+```
+
+Parâmetros:
+
+ -> jasperReport: O modelo de relatório compilado (arquivo .jasper) do tipo JasperReport.
+ -> parameters: Um mapa contendo os parâmetros que serão passados para o relatório (opcional). Os parâmetros são usados para personalizar o relatório ou fornecer informações 
+                adicionais.
+ -> dataSource: A fonte de dados que contém os dados a serem exibidos no relatório, representada por uma implementação de JRDataSource. Essa fonte de dados pode ser uma lista 
+                de objetos Java, um conjunto de resultados de banco de dados, ou qualquer outra implementação personalizada.
+                
+Funcionamento:
+
+-> O método fillReport recebe o modelo de relatório compilado (jasperReport) e uma fonte de dados (dataSource) contendo os dados a serem exibidos no relatório.
+-> Se houver parâmetros a serem passados para o relatório, eles são fornecidos através do mapa parameters.
+-> O modelo de relatório é preenchido com os dados e parâmetros fornecidos, resultando em um objeto JasperPrint que representa o relatório preenchido.
+
+------------ // ---------------
+
+A classe JasperExportManager faz parte da biblioteca JasperReports e é responsável por exportar um objeto JasperPrint, que representa um relatório preenchido, para diferentes 
+formatos de saída, como PDF, HTML, XLS (Excel), entre outros. Essa classe oferece métodos estáticos para realizar as operações de exportação de forma simples e direta.
+
+Principais características e funcionalidades da classe JasperExportManager:
+
+Exportação de relatórios: A principal função da classe JasperExportManager é exportar um objeto JasperPrint para um formato de arquivo específico, conforme necessário.
+
+Formatos de saída suportados: A classe oferece suporte para exportar relatórios nos formatos mais comuns, como PDF, HTML, XLS (Excel), CSV, XML, RTF, entre outros. Isso permite 
+que os relatórios sejam visualizados ou compartilhados em diferentes tipos de arquivos.
+
+Configurações adicionais: Em alguns formatos de saída, você pode definir configurações adicionais durante a exportação, como tamanho de página, orientação, fontes, cores, 
+entre outros. Essas configurações podem ser especificadas por meio de parâmetros extras ao chamar os métodos de exportação.
+
+------------ // ---------------
+Explicando a Classe ReportUtil:
+
+Ela responsável por gerar relatórios em formato PDF a partir de um arquivo JasperReports pré-compilado (arquivo .jasper) e uma lista de dados fornecida como entrada. Essa 
+classe utiliza a biblioteca JasperReports para criar e exportar os relatórios.
+
+Aqui está uma explicação detalhada das principais partes do script:
+
+1. Anotação `@Component`: Essa anotação indica que a classe `ReportUtil` é um componente gerenciado pelo Spring e pode ser injetada em outras classes usando a injeção de 
+                          dependência do Spring.
+
+2. Método `geraRelatorio`: Este método é responsável por gerar o relatório em formato PDF. Ele recebe três parâmetros:
+   - `listaDados`: Uma lista contendo os dados que serão exibidos no relatório. Essa lista é utilizada para preencher o modelo de relatório.
+   
+   - `relatorio`: O nome do arquivo JasperReports pré-compilado (sem a extensão .jasper) que será utilizado para gerar o relatório. O arquivo deve estar localizado na pasta 
+                  "relatorios" do projeto.
+                  
+   - `servletContext`: Uma instância do objeto `ServletContext` que permite acessar informações sobre o contexto do servlet, incluindo a localização de recursos no sistema de 
+                       arquivos.
+
+3. `JRBeanCollectionDataSource`: Essa classe é utilizada para criar uma fonte de dados a partir de uma lista de objetos Java (`listaDados`). A classe `JRBeanCollectionDataSource` 
+                                 é uma implementação da interface `JRDataSource` que permite preencher o modelo de relatório com os dados da lista.
+
+4. `JasperFillManager.fillReport`: Este método é usado para preencher o modelo de relatório (arquivo .jasper) com os dados fornecidos pela fonte de dados (`jrbcds`). O resultado 
+                                   do preenchimento é um objeto `JasperPrint`, que representa o relatório preenchido e pronto para ser exportado.
+
+5. `JasperExportManager.exportReportToPdf`: Este método é responsável por exportar o relatório preenchido (representado pelo objeto `JasperPrint`) para um arquivo PDF. O método 
+                                            retorna um array de bytes (byte[]) contendo o conteúdo do relatório PDF.
+
+Portanto, a classe `ReportUtil` encapsula a lógica para gerar relatórios PDF a partir de arquivos JasperReports e listas de dados. Essa classe pode ser utilizada em um projeto 
+Spring para gerar relatórios dinâmicos com base em dados fornecidos pela aplicação. Ela simplifica a criação de relatórios e a exportação para PDF, facilitando a geração de 
+documentos impressos para os usuários da aplicação.
+
