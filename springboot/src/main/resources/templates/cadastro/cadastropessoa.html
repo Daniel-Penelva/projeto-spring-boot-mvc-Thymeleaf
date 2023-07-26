@@ -99,7 +99,7 @@ form input[type=submit] {
 				<div class="input-field col s6" id="divCargo">
 					<label for="cargo" class="active">Cargo</label>
 					<select id="cargo" class="browser-default" th:field="*{cargo}">
-						<option th:each = "c: ${T(projeto.springboot.model.Cargo).values()}" th:value="${c}" th:text="${c.nome}">
+						<option th:each = "c: ${T(projeto.springboot.model.Cargo).values()}" th:value="${c.valor}" th:text="${c.nome}">
 					</select>
 				</div>
 			

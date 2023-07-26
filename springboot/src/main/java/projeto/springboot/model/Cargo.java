@@ -6,6 +6,7 @@ public enum Cargo {
 	SENIOR("Sênio");
 	
 	private String nome;
+	private String valor;
 	
 	private Cargo(String nome) {
 		this.nome = nome;
@@ -19,10 +20,22 @@ public enum Cargo {
 		return nome;
 	}
 	
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+	
+	public String getValor() {
+		return valor = this.name();
+	}
+	
+	
+   /* Para o Exemplo 2 (github)
+   
 	@Override
 	public String toString() {
 		return this.name();
 	}
+	*/
 }
 
 
