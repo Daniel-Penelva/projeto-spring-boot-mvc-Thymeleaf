@@ -1230,5 +1230,82 @@ A tag:
 
 -> th:text="${p.nome}": E um texto para mostrar para o usuário.
 
+-------------------------------------------------------------- // ---------------------------------------------------------------
 
+As propriedades fornecidas no 'application.properties' são configurações de banco de dados e Hibernate no contexto de uma aplicação Spring Boot. Essas configurações definem a 
+conexão com o banco de dados PostgreSQL e algumas configurações específicas do Hibernate.
 
+Explicação detalhada de cada propriedade:
+
+1. `spring.datasource.url`: Define a URL de conexão com o banco de dados PostgreSQL. Neste exemplo, está configurado para se conectar ao banco de dados "projeto-spring-boot-mvc" 
+                            no localhost na porta 5433.
+
+2. `spring.datasource.username`: Define o nome de usuário utilizado para autenticar-se no banco de dados PostgreSQL. Neste caso, o nome de usuário é "postgres".
+
+3. `spring.datasource.password`: Define a senha do usuário utilizado para autenticar-se no banco de dados PostgreSQL. Neste exemplo, a senha é "admin".
+
+4. `spring.datasource.driver-class-name`: Define a classe do driver JDBC a ser utilizada para estabelecer a conexão com o banco de dados PostgreSQL. Neste caso, está configurado 
+                                          para o driver do PostgreSQL, "org.postgresql.Driver".
+
+5. `spring.jpa.hibernate.ddl-auto`: Define a estratégia de geração do esquema do banco de dados pelo Hibernate. Neste caso, está configurado como "update", o que significa que o 
+                                    Hibernate irá atualizar automaticamente o esquema do banco de dados com base nas entidades definidas no código. Tenha em mente que em ambientes 
+                                    de produção, é recomendado utilizar "validate" ou "none" para evitar a alteração do esquema de forma acidental.
+
+6. `spring.datasource.platform`: Define a plataforma do banco de dados a ser utilizada pelo Spring Data JPA. Neste caso, está configurado como "postgres".
+
+7. `spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults`: Define a configuração de uso de metadados JDBC padrão do Hibernate. Neste caso, está definido como "false", 
+                                                                      o que permite que o Hibernate utilize suas próprias configurações em vez das configurações padrão do JDBC 
+                                                                      para operações temporárias.
+
+8. `spring.jpa.database-platform`: Define a plataforma de banco de dados específica do Hibernate a ser utilizada. Neste exemplo, está configurado para o dialeto do PostgreSQL.
+
+9. `spring.jpa.properties.hibernate.dialect`: Define o dialeto do banco de dados a ser usado pelo Hibernate. Neste caso, está configurado para o dialeto do PostgreSQL.
+
+Essas configurações permitem que a aplicação Spring Boot se conecte ao banco de dados PostgreSQL e utilize o Hibernate para interagir com o banco de dados de forma eficiente e 
+segura. É importante que essas configurações estejam de acordo com as configurações do seu ambiente e banco de dados específico.
+
+--------------//---------------
+
+As propriedades abaixo estão relacionadas à codificação de caracteres (encoding) no Spring Boot e são usadas para configurar como a codificação de caracteres deve ser tratada nas 
+solicitações e respostas HTTP.
+
+Explicação detalhada de cada propriedade:
+
+1. `spring.http.encoding.charset`: Define o conjunto de caracteres (charset) padrão a ser usado para codificar os dados de texto nas solicitações e respostas HTTP. Neste caso, 
+                                   está configurado como "UTF-8", que é uma codificação de caracteres amplamente utilizada para suportar vários idiomas e caracteres especiais.
+
+2. `spring.http.encoding.enabled`: Define se a codificação de caracteres está habilitada no aplicativo Spring Boot. Se definido como "true", a codificação de caracteres será 
+                                   ativada e a propriedade `spring.http.encoding.charset` será usada para configurar o conjunto de caracteres.
+
+3. `spring.http.encoding.force`: Define se a codificação de caracteres deve ser forçada em todas as solicitações e respostas HTTP. Se definido como "true", o aplicativo Spring 
+                                 Boot garantirá que a codificação de caracteres seja aplicada a todas as solicitações e respostas, mesmo que o cliente ou servidor não especifique 
+                                 explicitamente a codificação.
+
+4. `spring.http.encoding.force-request`: Define se a codificação de caracteres deve ser forçada apenas nas solicitações HTTP. Se definido como "true", o aplicativo Spring Boot 
+                                         garantirá que a codificação de caracteres seja aplicada a todas as solicitações recebidas.
+
+5. `spring.http.encoding.force-response`: Define se a codificação de caracteres deve ser forçada apenas nas respostas HTTP. Se definido como "true", o aplicativo Spring Boot 
+                                          garantirá que a codificação de caracteres seja aplicada a todas as respostas enviadas.
+                                          
+                                          
+
+Essas configurações são úteis para garantir que a codificação de caracteres seja consistente em todo o aplicativo, evitando problemas relacionados a caracteres especiais e 
+suportando corretamente diferentes idiomas. A configuração comum é definir todas as propriedades como "true" para garantir a consistência e segurança no tratamento dos caracteres 
+em todas as partes do aplicativo.
+
+--------------//---------------
+
+As propriedades abaixo estão relacionadas ao tratamento de arquivos enviados via formulários HTTP multipart no Spring Boot.
+
+Aqui está uma explicação de cada propriedade:
+
+1. `spring.servlet.multipart.max-file-size`: Define o tamanho máximo permitido para o envio de um arquivo individual via formulários HTTP multipart. Neste caso, está configurado 
+                                             para 10000KB, ou seja, 10 megabytes. Se um arquivo enviado exceder esse tamanho, o Spring Boot irá rejeitar o envio e gerar um erro.
+
+2. `spring.servlet.multipart.max-request-size`: Define o tamanho máximo permitido para todo o request HTTP multipart. Isso inclui todos os arquivos enviados juntos com outros 
+                                                campos do formulário. Neste caso, também está configurado para 10000KB, ou seja, 10 megabytes. Se o tamanho total de todos os 
+                                                arquivos enviados e outros campos do formulário exceder esse tamanho, o Spring Boot irá rejeitar o envio e gerar um erro.
+
+Essas configurações são importantes para controlar o tamanho dos arquivos que podem ser enviados para o servidor via formulários HTTP multipart. Elas podem ser usadas para 
+evitar sobrecargas e garantir que o servidor possa lidar adequadamente com os dados recebidos. É importante ajustar essas propriedades de acordo com as necessidades específicas 
+da aplicação, considerando a capacidade de armazenamento do servidor e os requisitos de uso do aplicativo.
