@@ -21,6 +21,10 @@
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<!-- Para rodar Calendar Data em todos os navegadores -->
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
 <style type="text/css">
 
 /*Fiz a Inspeção (F12) e modifiquei a cor de fundo e a cor da fonte do paragráfo. */
@@ -101,6 +105,12 @@ form input[type=submit] {
 					<select id="cargo" class="browser-default" th:field="*{cargo}">
 						<option th:each = "c: ${T(projeto.springboot.model.Cargo).values()}" th:value="${c.valor}" th:text="${c.nome}">
 					</select>
+				</div>
+				
+				<div class="input-field col s6" id="divDataNascimento">
+					<i class="material-icons prefix">account_circle</i>
+					<label for="dataNascimento" class="active">Data Nascimento</label>
+					<input type="date" id="dataNascimento" th:field="*{dataNascimento}" name="dataNascimento" placeholder="Data Nascimento">
 				</div>
 			
 			   <div class="input-field col s6" id="divSexo">
@@ -240,7 +250,14 @@ form input[type=submit] {
 <!-- Adicionando Javascript para o CEP - Link: https://viacep.com.br/exemplo/jquery/ -->
     <script>
 
+   
         $(document).ready(function() {
+        	
+        	// Permite um formato de data mais amigável para todos os navegadores
+        	$('#dataNascimento').datepicker({
+        		showOthermonths:true,
+        		format: 'yyyy-mm-dd'
+        	});
 
             function limpa_formulário_cep() {
                 // Limpa valores do formulário de cep.

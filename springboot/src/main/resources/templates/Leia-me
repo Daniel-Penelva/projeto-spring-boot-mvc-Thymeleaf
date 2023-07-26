@@ -1309,3 +1309,25 @@ Aqui está uma explicação de cada propriedade:
 Essas configurações são importantes para controlar o tamanho dos arquivos que podem ser enviados para o servidor via formulários HTTP multipart. Elas podem ser usadas para 
 evitar sobrecargas e garantir que o servidor possa lidar adequadamente com os dados recebidos. É importante ajustar essas propriedades de acordo com as necessidades específicas 
 da aplicação, considerando a capacidade de armazenamento do servidor e os requisitos de uso do aplicativo.
+
+-------------------------------------------------------------- // ---------------------------------------------------------------
+
+O script usa o jQuery Datepicker para criar um seletor de data em um elemento HTML com o id "dataNascimento". O Datepicker é uma biblioteca do jQuery que permite que os usuários 
+selecionem uma data em um formato mais amigável em vez de digitar manualmente.
+
+Explicação do que cada opção faz:
+
+1. `$('#dataNascimento')`: Essa parte do script seleciona o elemento HTML com o id "dataNascimento" usando o seletor do jQuery (o símbolo '$' indica que estamos usando o jQuery). 
+                           O Datepicker será aplicado a esse elemento para habilitar a seleção de data.
+
+2. `datepicker({})`: Essa é a função do Datepicker, e dentro do par de chaves, podemos passar várias opções para personalizar o comportamento do Datepicker.
+
+3. `showOtherMonths: true`: Essa opção define se os dias de outros meses também serão mostrados no seletor de datas. Quando definida como "true", os dias de outros meses são 
+                            exibidos para preencher as lacunas na exibição do calendário.
+
+4. `format: 'yyyy-mm-dd'`: Essa opção define o formato da data selecionada pelo usuário. Neste caso, está definido como "yyyy-mm-dd", o que significa que a data será exibida no 
+                           formato "ano-mês-dia". Por exemplo, "2023-06-28".
+
+Ao usar esse script em conjunto com a biblioteca do jQuery Datepicker, o elemento HTML com o id "dataNascimento" se tornará um campo de entrada que permitirá que os usuários 
+selecionem uma data usando um calendário interativo. As opções especificadas no script permitem personalizar a aparência e o formato da data selecionada.
+
