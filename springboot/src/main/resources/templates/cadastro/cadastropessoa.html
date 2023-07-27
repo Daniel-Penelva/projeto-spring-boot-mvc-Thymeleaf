@@ -225,6 +225,8 @@ form input[type=submit] {
 <br />
 <br />
 
+<fieldset>
+<legend>Tabela de Registro</legend>
 	<div class="row">
 		<table class="striped">
 			<thead>
@@ -233,6 +235,7 @@ form input[type=submit] {
 					<th>Nome</th>
 					<th>Sobrenome</th>
 					<th>Idade</th>
+					<th>profissao</th>
 					<th>Editar</th>
 					<th>Excluir</th>
 				</tr>
@@ -246,6 +249,8 @@ form input[type=submit] {
 							th:text=${pessoa.nome}></span></a></td>
 					<td th:text=${pessoa.sobrenome}></td>
 					<td th:text=${pessoa.idade}></td>
+					<td th:if="${pessoa.profissaopessoa != null}" th:text="${pessoa.profissaopessoa.nome}"></td>
+					<td th:unless="${pessoa.profissaopessoa != null}">Profissão não especificada</td>
 					<td><a
 						th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}"
 						class="waves-effect waves-light btn">Editar</a></td>
@@ -256,6 +261,7 @@ form input[type=submit] {
 			</tbody>
 		</table>
 	</div>
+</fieldset>
 
 	<br />
 	<p>Aprendizado: Spring Boot MVC + Thymeleaf + JPA + Banco de dados Postgresql</p>

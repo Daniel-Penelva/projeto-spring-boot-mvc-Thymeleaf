@@ -1410,3 +1410,129 @@ Vamos explicar o código passo a passo:
 
 Em resumo, o script trata do upload de um novo currículo caso o usuário envie um arquivo, mas também garante que o currículo existente seja preservado durante a edição se 
 nenhum novo arquivo for enviado. Isso é útil para garantir que o currículo existente não seja excluído acidentalmente durante uma operação de edição.
+
+
+-------------------------------------------------------------- // ---------------------------------------------------------------
+<td th:if="${pessoa.profissaopessoa != null}" th:text="${pessoa.profissaopessoa.nome}"></td>
+<td th:unless="${pessoa.profissaopessoa != null}">Profissão não especificada</td>
+
+No código acima, estamos verificando se a propriedade profissaopessoa da classe Pessoa não é nula. Se não for nula, exibimos o nome da profissão usando 
+${pessoa.profissaopessoa.nome}. Caso contrário, exibimos a mensagem "Profissão não especificada".
+
+Bom Saber para aprender:
+
+As anotações th:if e th:unless são recursos fornecidos pelo Thymeleaf, que é um mecanismo de templates utilizado em aplicativos Spring Boot. Essas anotações permitem controlar 
+a exibição de elementos HTML com base em condições definidas no modelo.
+
+th:if:
+ -> A anotação th:if é usada para exibir um elemento HTML somente se a condição especificada for verdadeira.
+ -> Sintaxe: <elementoHTML th:if="${condicao}">...</elementoHTML>
+ -> Se ${condicao} for verdadeira, o conteúdo do elemento será exibido no HTML. Caso contrário, o elemento não será renderizado no HTML.
+ 
+th:unless:
+ -> A anotação th:unless é usada para exibir um elemento HTML somente se a condição especificada for falsa.
+ -> Sintaxe: <elementoHTML th:unless="${condicao}">...</elementoHTML>
+ -> Se ${condicao} for falsa, o conteúdo do elemento será exibido no HTML. Caso contrário, o elemento não será renderizado no HTML.
+ 
+ ---------------- // ----------------
+ 
+th:each:
+ -> Essa anotação é usada para iterar sobre uma lista ou coleção no modelo.
+ -> Sintaxe: <elementoHTML th:each="item : ${colecao}">...</elementoHTML>
+ -> item é a variável de iteração que representa cada item da coleção ${colecao}.
+ 
+ ---------------- // ----------------
+ 
+th:switch e th:case:
+ -> Essas anotações são usadas para criar estruturas condicionais switch-case.
+ -> th:switch define a expressão que será avaliada, enquanto th:case representa os casos possíveis.
+Exemplo:
+
+```
+<th:block th:switch="${diaDaSemana}">
+  <p th:case="'segunda'">É segunda-feira</p>
+  <p th:case="'terca'">É terça-feira</p>
+  <p th:case="'quarta'">É quarta-feira</p>
+  <p th:case="'quinta'">É quinta-feira</p>
+  <p th:case="'sexta'">É sexta-feira</p>
+  <p th:case="'sabado', 'domingo'">É fim de semana</p>
+  <p th:case="*">Dia não reconhecido</p>
+</th:block>
+```
+---------------- // ----------------
+
+th:attr:
+ -> Essa anotação permite definir ou modificar atributos HTML de elementos.
+ -> Sintaxe: <elementoHTML th:attr="atributo1=valor1, atributo2=valor2, ...">
+Exemplo:
+
+```
+<a th:attr="href=@{/usuario/{id}(id=${usuario.id})}" th:text="${usuario.nome}"></a>
+```
+
+---------------- // ----------------
+
+th:text:
+ -> Essa anotação é usada para definir o texto de um elemento HTML.
+ -> Sintaxe: <elementoHTML th:text="expressao">
+Exemplo:
+
+```
+<p th:text="${mensagem}">Texto padrão, se mensagem estiver vazia</p>
+```
+
+---------------- // ----------------
+
+th:href:
+ -> Essa anotação é usada para definir o atributo href de links.
+- >Sintaxe: <elementoHTML th:href="url">
+Exemplo:
+
+```
+<a th:href="@{/pagina}">Link para outra página</a>
+```
+
+---------------- // ----------------
+
+th:src:
+ -> Essa anotação é usada para definir o atributo src de elementos HTML, como imagens.
+ -> Sintaxe: <elementoHTML th:src="url">
+Exemplo:
+
+```
+<img th:src="@{/imagem.png}" alt="Imagem">
+```
+
+---------------- // ----------------
+
+th:class:
+ -> Essa anotação é usada para definir as classes CSS de um elemento HTML.
+ -> Sintaxe: <elementoHTML th:class="classe1 classe2 ...">
+Exemplo:
+
+```
+<div th:class="container-fluid">Conteúdo</div>
+```
+
+---------------- // ----------------
+
+th:style:
+ -> Essa anotação é usada para definir o estilo CSS de um elemento HTML.
+ -> Sintaxe: <elementoHTML th:style="atributo:valor; atributo:valor; ...">
+Exemplo:
+
+```
+<p th:style="color:red; font-size:20px;">Texto com estilo</p>
+```
+
+---------------- // ----------------
+
+th:inline:
+ -> Essa anotação é usada para incluir expressões diretamente no conteúdo de um elemento HTML.
+ -> Sintaxe: <elementoHTML th:inline="atributo">
+Exemplo:
+
+```
+<p th:inline="text">Olá, [[${nome}]]!</p>
+```
+
