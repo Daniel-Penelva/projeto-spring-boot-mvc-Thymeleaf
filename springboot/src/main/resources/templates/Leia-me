@@ -1331,3 +1331,8 @@ Explicação do que cada opção faz:
 Ao usar esse script em conjunto com a biblioteca do jQuery Datepicker, o elemento HTML com o id "dataNascimento" se tornará um campo de entrada que permitirá que os usuários 
 selecionem uma data usando um calendário interativo. As opções especificadas no script permitem personalizar a aparência e o formato da data selecionada.
 
+-------------------------------------------------------------- // ---------------------------------------------------------------
+Criando Upload com Spring MVC e Thymeleaf
+
+Vale ressaltar que para conseguir fazer o upload tem que adicionar a propriedade e seus respectivo valor 'enctype="multipart/form-data"' no form (formulario) de cadastro.
+
