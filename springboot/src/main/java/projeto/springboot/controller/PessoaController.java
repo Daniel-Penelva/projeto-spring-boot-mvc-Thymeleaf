@@ -627,5 +627,60 @@ public class PessoaController {
 		// Finaliza a resposta para o navegador
 		response.getOutputStream().write(pdf);
 	}
+	
+	
+	/**
+	 * Esse script é um endpoint da API que permite baixar o currículo de uma pessoa a partir do seu ID. Vamos analisar o código passo a passo:
+	 * 
+	 * 1. `@GetMapping("doisasteristicos/baixarcurriculo/{idpessoa}")`: Essa é uma anotação do Spring Framework que define um endpoint para uma requisição HTTP GET. O path do endpoint 
+	 *     é "doisasteristicos/baixarcurriculo/{idpessoa}", onde "{idpessoa}" é uma variável que será preenchida com o ID da pessoa que queremos baixar o currículo.
+	 *                                                                  
+	 * 2. `public void baixarCurriculo(@PathVariable("idpessoa") Long idpessoa, HttpServletResponse response) throws IOException`: Esse é o método que será executado quando a 
+	 *     requisição for feita para o endpoint. Ele recebe como parâmetro o ID da pessoa e o objeto `HttpServletResponse`, que será usado para enviar a resposta ao cliente.
+	 *     
+	 * 3. `Pessoa pessoa = pessoaRepository.findById(idpessoa).get();`: Aqui, é feita uma consulta ao banco de dados para obter o objeto `Pessoa` correspondente ao ID informado 
+	 *     na requisição.
+	 *     
+	 * 4. `if(pessoa.getCurriculo() != null) { ... }`: Verifica se a pessoa possui um currículo. Caso tenha, o currículo será enviado como resposta para o cliente.
+	 * 
+	 * 5. `response.setContentLength(pessoa.getCurriculo().length);`: Define o tamanho da resposta, especificando o tamanho do currículo em bytes.
+	 * 
+	 * 6. `response.setContentType(pessoa.getTipoFileCurriculo());`: Define o tipo do arquivo da resposta. Isso indica ao cliente como tratar o conteúdo que está sendo enviado. 
+	 *     O tipo do arquivo é obtido do atributo `tipoFileCurriculo` do objeto `Pessoa`, que foi armazenado anteriormente no banco de dados.
+	 *     
+	 * 7. `String headerKey = "Content-Disposition"; String headerValue = String.format("attachment; filename=\"%s\"", pessoa.getNomeFileCurriculo()); 
+	 *     response.setHeader(headerKey, headerValue);`: Aqui, é definido o cabeçalho da resposta, especificando o nome do arquivo que será baixado pelo cliente. O nome do 
+	 *     arquivo é obtido do atributo `nomeFileCurriculo` do objeto `Pessoa`.
+	 *     
+	 * 8. `response.getOutputStream().write(pessoa.getCurriculo());`: Finalmente, o currículo é enviado como resposta para o cliente, usando o método `getOutputStream()` do 
+	 *     objeto `HttpServletResponse`.
+	 *     
+	 * Esse endpoint é útil para permitir que os usuários da aplicação possam baixar o currículo das pessoas cadastradas no sistema. Ao fazer uma requisição para esse endpoint 
+	 * com o ID da pessoa desejada, o usuário receberá o currículo correspondente como download em seu navegador.
+	 * */
+	
+	@GetMapping("**/baixarcurriculo/{idpessoa}")
+	public void baixarCurriculo(@PathVariable("idpessoa") Long idpessoa, HttpServletResponse response) throws IOException {
+		
+		// Consultar objeto pessoa no banco de dados
+		Pessoa pessoa = pessoaRepository.findById(idpessoa).get();
+		
+		if(pessoa.getCurriculo() != null) {
+			
+			// Setar o tamanho da resposta
+			response.setContentLength(pessoa.getCurriculo().length);
+			
+			// Tipo do arquivo para o download ou pode ser genérica usando "application/octet-stream"
+			response.setContentType(pessoa.getTipoFileCurriculo());
+			
+			// Define o cabeçalho da resposta - isso é padrão
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"%s\"", pessoa.getNomeFileCurriculo());
+			response.setHeader(headerKey, headerValue);
+			
+			// Finaliza a resposta passando o arquivo 
+			response.getOutputStream().write(pessoa.getCurriculo());
+		}
+	}
 
 }

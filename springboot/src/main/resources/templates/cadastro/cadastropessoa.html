@@ -235,7 +235,8 @@ form input[type=submit] {
 					<th>Nome</th>
 					<th>Sobrenome</th>
 					<th>Idade</th>
-					<th>profissao</th>
+					<th>Profissao</th>
+					<th>Download Currículo</th>
 					<th>Editar</th>
 					<th>Excluir</th>
 				</tr>
@@ -251,6 +252,9 @@ form input[type=submit] {
 					<td th:text=${pessoa.idade}></td>
 					<td th:if="${pessoa.profissaopessoa != null}" th:text="${pessoa.profissaopessoa.nome}"></td>
 					<td th:unless="${pessoa.profissaopessoa != null}">Profissão não especificada</td>
+					<td><a
+						th:href="@{/baixarcurriculo/{idpessoa}(idpessoa=${pessoa.id})}"
+						class="waves-effect waves-light btn">Download</a></td>
 					<td><a
 						th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}"
 						class="waves-effect waves-light btn">Editar</a></td>
