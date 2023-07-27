@@ -1336,3 +1336,77 @@ Criando Upload com Spring MVC e Thymeleaf
 
 Vale ressaltar que para conseguir fazer o upload tem que adicionar a propriedade e seus respectivo valor 'enctype="multipart/form-data"' no form (formulario) de cadastro.
 
+O upload vai ser inicializado através da ação (action="salvarpessoa") no formulário de cadastro. Vamos precisar passar mais um parametro no RequestMapping no controller no método 
+'salvar' para poder trabalhar o upload. Esse parâmetro e seu respectivo valor é o consumes = {"multipart/form-data"}. Explicações:
+
+O parâmetro `consumes` é usado em uma anotação de método ou mapeamento de endpoint em um aplicativo Spring para especificar o tipo de mídia (media type) que o endpoint aceita 
+como entrada (payload) da solicitação HTTP.
+
+No contexto específico do uso `consumes = {"multipart/form-data"}`, isso indica que o endpoint só aceita solicitações HTTP com o tipo de mídia "multipart/form-data". O 
+"multipart/form-data" é um tipo de conteúdo usado quando se envia dados de formulário com arquivos, como uploads de arquivos através de formulários HTML.
+
+Quando um endpoint é configurado com `consumes = {"multipart/form-data"}`, ele espera que as solicitações recebidas incluam dados enviados no formato "multipart/form-data", que 
+é o formato padrão para enviar formulários com arquivos. Isso é útil em casos em que o endpoint precisa processar o upload de arquivos ou dados de formulários que contenham anexos.
+
+Por exemplo, se você tiver um endpoint que aceita uploads de imagens ou outros arquivos, você pode usar `consumes = {"multipart/form-data"}` para garantir que o endpoint só 
+processe solicitações enviadas no formato correto para upload de arquivos. Se uma solicitação for feita com um tipo de mídia diferente, o Spring rejeitará a solicitação com um 
+erro "Unsupported Media Type" (Tipo de Mídia Não Suportado). Isso evita que o endpoint processe solicitações inválidas ou não esperadas.
+
+------------ // ---------------
+
+A classe `MultipartFile` é uma parte fundamental do Spring Framework e é usada para representar um arquivo que é carregado através de uma solicitação HTTP com 
+`multipart/form-data`. É amplamente utilizada em aplicativos web para tratar o upload de arquivos, como imagens, documentos, vídeos e outros tipos de conteúdo.
+
+Aqui estão algumas funcionalidades importantes e métodos que a classe `MultipartFile` oferece:
+
+1. Representação de um arquivo carregado: A classe `MultipartFile` representa um arquivo carregado do cliente para o servidor. Ela contém informações como o nome do arquivo, o 
+                                          tamanho do arquivo, o tipo de conteúdo (mime type) e os bytes reais do arquivo.
+
+2. Recuperação de informações do arquivo: Através dos métodos disponíveis na classe `MultipartFile`, você pode obter várias informações sobre o arquivo carregado, como o nome 
+                                          original do arquivo (`getOriginalFilename()`), o tamanho do arquivo em bytes (`getSize()`), o tipo de conteúdo do arquivo 
+                                          (`getContentType()`), etc.
+
+3. Acesso aos dados do arquivo: Através do método `getBytes()`, você pode obter os bytes do arquivo carregado. Isso permite que você processe, armazene ou transfira o conteúdo 
+                                do arquivo conforme necessário no seu aplicativo.
+
+4. Validação do arquivo: Você pode realizar validações no arquivo carregado usando métodos como `isEmpty()` para verificar se o arquivo está vazio e `getSize()` para verificar 
+                         o tamanho do arquivo e impor limites.
+
+5. Armazenamento do arquivo: A classe `MultipartFile` é frequentemente usada em conjunto com bibliotecas de armazenamento, como o Spring `MultipartFile` é frequentemente usada 
+                             em conjunto com bibliotecas de armazenamento, como o Spring `MultipartFile` é frequentemente usada em conjunto com bibliotecas de armazenamento, 
+                             como o Spring `MultipartFile` é frequentemente usada em conjunto com bibliotecas de armazenamento, como o Spring `MultipartFile` é frequentemente 
+                             usada em conjunto com bibliotecas de armazenamento, como o Spring `MultipartFile` é frequentemente usada em conjunto com bibliotecas de armazenamento, 
+                             como o Spring File Upload para salvar o arquivo em disco, em um banco de dados ou em um serviço de armazenamento em nuvem.
+
+Em resumo, a classe `MultipartFile` fornece uma maneira conveniente de trabalhar com arquivos carregados em aplicativos web e é especialmente útil em cenários de upload de 
+arquivos, onde você precisa processar e armazenar os arquivos enviados pelo usuário.
+
+------------ // ---------------
+
+Esse script trata o upload de um arquivo usando a classe `MultipartFile` do Spring Framework, e também lida com o cenário de edição de um objeto `pessoa` que já possui um 
+currículo previamente carregado.
+
+Vamos explicar o código passo a passo:
+
+1. `file`: Supõe-se que `file` é uma instância da classe `MultipartFile`, que representa o arquivo carregado pelo usuário através de uma solicitação HTTP multipart.
+
+2. `file.getSize()`: Esse método retorna o tamanho do arquivo em bytes. Se o tamanho do arquivo for maior que zero, isso significa que um arquivo foi enviado pelo usuário.
+
+3. `pessoa`: Presumivelmente, `pessoa` é uma instância de uma classe que representa os dados de uma pessoa em um aplicativo.
+
+4. `pessoa.setCurriculo(file.getBytes())`: Se o tamanho do arquivo for maior que zero (ou seja, um arquivo foi enviado pelo usuário), o código obtém os bytes do arquivo usando 
+                                           o método `file.getBytes()` e atribui esses bytes à propriedade `curriculo` do objeto `pessoa`. Isso significa que o conteúdo do arquivo 
+                                           carregado pelo usuário será armazenado na propriedade `curriculo` do objeto `pessoa`.
+
+5. `else if (pessoa.getId() != null && pessoa.getId() > 0)`: Se o tamanho do arquivo for zero, o código verifica se o objeto `pessoa` já possui um ID válido (ou seja, já existe 
+                                                             no banco de dados). Essa condição indica que estamos editando uma pessoa existente em vez de criar uma nova.
+
+6. `byte[] curriculoTempo = pessoaRepository.findById(pessoa.getId()).get().getCurriculo()`: Se a pessoa já existe no banco de dados, o código recupera o currículo previamente 
+                                                                                             armazenado no banco de dados para essa pessoa através do `pessoaRepository`. O 
+                                                                                             currículo é armazenado como um array de bytes (`byte[]`).
+
+7. `pessoa.setCurriculo(curriculoTempo)`: Em seguida, o código atribui o currículo previamente armazenado à propriedade `curriculo` do objeto `pessoa`. Isso garante que, se o 
+                                          usuário não enviar um novo currículo durante a edição, o currículo existente no banco de dados será mantido.
+
+Em resumo, o script trata do upload de um novo currículo caso o usuário envie um arquivo, mas também garante que o currículo existente seja preservado durante a edição se 
+nenhum novo arquivo for enviado. Isso é útil para garantir que o currículo existente não seja excluído acidentalmente durante uma operação de edição.

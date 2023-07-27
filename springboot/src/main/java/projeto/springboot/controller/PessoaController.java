@@ -1,5 +1,6 @@
 package projeto.springboot.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import projeto.springboot.model.Pessoa;
@@ -146,10 +148,11 @@ public class PessoaController {
 	 *  O uso dos asteriscos permite maior flexibilidade no mapeamento das URLs e ajuda a tratar diferentes possibilidades de caminhos que 
 	 *  podem ser utilizados na aplicação. É útil quando você deseja criar um mapeamento genérico para determinada rota, independentemente 
 	 *  do número de diretórios anteriores.
+	 * @throws IOException 
 	 * */
 	
-	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa")
-	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
+	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa", consumes = {"multipart/form-data"})
+	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult, final MultipartFile file) throws IOException {
 
 		pessoa.setTelefones(telefoneRepository.getTelefones(pessoa.getId()));
 		
@@ -169,6 +172,15 @@ public class PessoaController {
 			modelAndView.addObject("msg", msg);
 			modelAndView.addObject("profissoes", profissaoRepository.findAll());
 			return modelAndView;
+		}
+		
+		/* verifica se o tamanho do arquivo é maior que zero e, se for verdadeiro, atribui os bytes do arquivo à propriedade curriculo de um objeto pessoa.*/
+		if(file.getSize() > 0) {
+			pessoa.setCurriculo(file.getBytes());
+			
+		}else if(pessoa.getId() != null && pessoa.getId() > 0){ //Essa condição é para manter o curriculo persistido no banco caso o usuario seja editado - verifica se o objeto `pessoa` já possui um ID válido (ou seja, já existe no banco de dados). Essa condição indica que estamos editando uma pessoa existente em vez de criar uma nova.
+			byte[] curriculoTempo = pessoaRepository.findById(pessoa.getId()).get().getCurriculo();
+			pessoa.setCurriculo(curriculoTempo);
 		}
 		
 		pessoaRepository.save(pessoa);
