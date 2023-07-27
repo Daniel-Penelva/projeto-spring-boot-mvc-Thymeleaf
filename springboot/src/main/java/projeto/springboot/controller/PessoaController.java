@@ -154,6 +154,10 @@ public class PessoaController {
 	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa", consumes = {"multipart/form-data"})
 	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult, final MultipartFile file) throws IOException {
 
+		// Apenas para didática 
+		System.out.println("Gera o tipo do arquivo upload:" + file.getContentType());
+		System.out.println("Gera o nome do arquivo upload:" + file.getOriginalFilename());
+		
 		pessoa.setTelefones(telefoneRepository.getTelefones(pessoa.getId()));
 		
 		if(bindingResult.hasErrors()) {
@@ -177,10 +181,14 @@ public class PessoaController {
 		/* verifica se o tamanho do arquivo é maior que zero e, se for verdadeiro, atribui os bytes do arquivo à propriedade curriculo de um objeto pessoa.*/
 		if(file.getSize() > 0) {
 			pessoa.setCurriculo(file.getBytes());
+			pessoa.setTipoFileCurriculo(file.getContentType());
+			pessoa.setNomeFileCurriculo(file.getOriginalFilename());
 			
 		}else if(pessoa.getId() != null && pessoa.getId() > 0){ //Essa condição é para manter o curriculo persistido no banco caso o usuario seja editado - verifica se o objeto `pessoa` já possui um ID válido (ou seja, já existe no banco de dados). Essa condição indica que estamos editando uma pessoa existente em vez de criar uma nova.
-			byte[] curriculoTempo = pessoaRepository.findById(pessoa.getId()).get().getCurriculo();
-			pessoa.setCurriculo(curriculoTempo);
+			Pessoa pessoaTemp = pessoaRepository.findById(pessoa.getId()).get();
+			pessoa.setCurriculo(pessoaTemp.getCurriculo());
+			pessoa.setTipoFileCurriculo(pessoaTemp.getTipoFileCurriculo());
+			pessoa.setNomeFileCurriculo(pessoaTemp.getNomeFileCurriculo());
 		}
 		
 		pessoaRepository.save(pessoa);
