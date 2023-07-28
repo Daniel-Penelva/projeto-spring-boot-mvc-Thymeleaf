@@ -44,6 +44,16 @@ form input[type=submit] {
 	color: white;
 }
 
+
+table td, table th{
+border: 1px solid grey;
+text-align: center;
+} 
+
+table th{
+background: #eee;
+}
+
 </style>
 </head>
 <body>
@@ -251,11 +261,11 @@ form input[type=submit] {
 					<td th:text=${pessoa.sobrenome}></td>
 					<td th:text=${pessoa.idade}></td>
 					<td th:if="${pessoa.profissaopessoa != null}" th:text="${pessoa.profissaopessoa.nome}"></td>
-					<td th:unless="${pessoa.profissaopessoa != null}">Profissão não especificada</td>
+					<td th:unless="${pessoa.profissaopessoa != null}" style="color:red; font-weight: bold">Profissão não especificada</td>
 					<td><a th:if="${pessoa.curriculo != null}"
 						th:href="@{/baixarcurriculo/{idpessoa}(idpessoa=${pessoa.id})}"
 						class="waves-effect waves-light btn">Download</a>
-						<a th:if="${pessoa.curriculo == null}" style="color:red;">Download não especificado</a>
+						<a th:if="${pessoa.curriculo == null}" style="color:red; font-weight: bold">Download não especificado</a>
 					</td>
 					<td><a
 						th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}"
@@ -268,6 +278,25 @@ form input[type=submit] {
 		</table>
 	</div>
 </fieldset>
+
+<div class="row" style="margin-top: 30px;">
+	<center>
+	
+		<span th:if="${pessoas.hasPrevious()}">
+			<a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size})}">Anterior</a>
+		</span>
+	
+		<th:block th:each="i: ${#numbers.sequence(0, pessoas.totalPages - 1)}">
+			<a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size})}">[[ ${i} + 1 ]]</a>
+		</th:block>
+		
+		<span th:if="${pessoas.hasNext()}">
+			<a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size})}">Próximo</a>
+		</span>
+		
+	</center>
+</div>
+
 
 	<br />
 	<p>Aprendizado: Spring Boot MVC + Thymeleaf + JPA + Banco de dados Postgresql</p>
