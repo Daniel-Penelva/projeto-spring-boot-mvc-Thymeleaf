@@ -323,46 +323,60 @@ public class PessoaController {
 	
 	
 	/**
-	 * O código abaixo trata-se de uma requisição HTTP POST para a URL "2asteristicos/pesquisarpessoa" e realiza uma pesquisa de pessoas 
-	 * com base em um parâmetro de nome. O método retorna uma visualização (view) chamada "cadastro/cadastropessoa" com os resultados da 
-	 * pesquisa.
+	 * O método abaixo é responsável por lidar com a pesquisa de pessoas com base em critérios específicos, como o nome e o sexo, usando paginação. Vamos entender o que cada parte do script faz:
+	 * 1. `@PostMapping("doisasteristicos/pesquisarpessoa")`: Essa é a anotação que mapeia o método para lidar com requisições POST para o endpoint "/pesquisarpessoa".
 	 * 
-	 * A anotação @PostMapping indica que o método pesquisar() será executado apenas para requisições POST. A URL "/pesquisarpessoa" é 
-	 * mapeada, onde "" é utilizado como um curinga para representar qualquer número de diretórios ou subdiretórios antes de "/pesquisarpessoa".
+	 * 2. `public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa, @RequestParam("sexopesquisa") String sexopesquisa, @PageableDefault(size = 5, 
+	 *     sort= {"nome"}) Pageable pageable) {`: Esse é o método responsável pela pesquisa. Ele recebe três parâmetros: `nomepesquisa` e `sexopesquisa`, que são os critérios 
+	 *     de pesquisa, e `pageable`, que define a paginação dos resultados.
+	 *     
+	 * 3. `Page<Pessoa> pessoas = null;`: É criada uma variável `pessoas` que vai armazenar os resultados da pesquisa.
 	 * 
-	 * O parâmetro @RequestParam("nomepesquisa") String nomepesquisa indica que o valor do parâmetro "nomepesquisa" enviado no corpo da 
-	 * requisição será atribuído à variável nomepesquisa do tipo String.
+	 * 4. if(sexopesquisa != null && !sexopesquisa.isEmpty() ) {: Esta condição verifica se o critério de pesquisa pelo sexo foi informado pelo usuário. Se o critério estiver 
+	 *    presente e não estiver vazio, isso significa que o usuário deseja fazer uma pesquisa com base no sexo.
+	 *    
+	 * 5. pessoas = pessoaRepository.findPessoaBySexoPage(nomepesquisa, sexopesquisa, pageable);: Se a condição do passo 4 for verdadeira, significa que o usuário deseja 
+	 *    pesquisar pelo sexo. Nesse caso, a variável pessoas receberá o resultado da consulta usando o método findPessoaBySexoPage do repositório.
+	 *    
+	 * 6. else {: Se a condição do passo 4 for falsa, significa que o usuário não deseja pesquisar pelo sexo e deseja pesquisar apenas pelo nome.
 	 * 
-	 * A classe ModelAndView é utilizada para representar uma visualização (view) que será renderizada e retornada como resposta para o 
-	 * cliente. Nesse caso, a visualização é definida como "cadastro/cadastropessoa".
+	 * 7. pessoas = pessoaRepository.findPessoaByNamePage(nomepesquisa, pageable);: Nesse caso, a variável pessoas receberá o resultado da consulta usando o método 
+	 *    findPessoaByNamePage do repositório.
 	 * 
-	 * O método findPessoaByName(nomepesquisa) é chamado no objeto pessoaRepository para buscar as pessoas com base no nome informado. O 
-	 * resultado da pesquisa, que é uma lista de pessoas correspondentes, é adicionado ao objeto ModelAndView com o nome "pessoas". Isso 
-	 * permite que a lista seja acessada e exibida na visualização "cadastro/cadastropessoa".
+	 * 8. `ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");`: É criado um objeto `ModelAndView` que representa a página HTML a ser renderizada.
 	 * 
-	 * Um objeto vazio do tipo Pessoa é adicionado ao objeto ModelAndView com o nome "pessoaobj". Isso provavelmente é utilizado na 
-	 * visualização para exibir um formulário vazio para o cadastro de uma nova pessoa.
+	 * 9. `modelAndView.addObject("pessoas", pessoas);`: É adicionado ao `ModelAndView` o objeto `pessoas`, que contém os resultados da pesquisa.
 	 * 
-	 * Por fim, o objeto ModelAndView é retornado como resultado do método. Isso significa que a visualização "cadastro/cadastropessoa" 
-	 * será renderizada e retornada como resposta para o cliente que fez a requisição POST. A visualização exibirá os resultados da 
-	 * pesquisa de pessoas com base no nome informado, além de um formulário vazio para o cadastro de uma nova pessoa.
+	 * 10. `modelAndView.addObject("pessoaobj", new Pessoa());`: É adicionado ao `ModelAndView` um objeto vazio da classe `Pessoa`, que será utilizado para preencher o formulário de cadastro na página.
+	 * 
+	 * 11. `modelAndView.addObject("nomepesquisa", nomepesquisa);`: É adicionado ao `ModelAndView` o parâmetro `nomepesquisa` para manter o valor da pesquisa na página e 
+	 *     possibilitar a exibição do critério de pesquisa utilizado pelo usuário.
+	 *     
+	 * 12. `return modelAndView;`: O método retorna o objeto `ModelAndView`, que será utilizado para renderizar a página HTML contendo os resultados da pesquisa e o formulário 
+	 *    de cadastro.
+	 *    
+	 * Em resumo, esse método recebe os critérios de pesquisa (nome e sexo), realiza a busca no banco de dados usando paginação e retorna a página HTML com os resultados da 
+	 * pesquisa e o formulário de cadastro. Dependendo dos critérios informados pelo usuário, diferentes consultas podem ser realizadas para obter os dados desejados.
 	 * */
 	
 	@PostMapping("**/pesquisarpessoa")
-	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa, @RequestParam("sexopesquisa") String sexopesquisa) {
+	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa, 
+			@RequestParam("sexopesquisa") String sexopesquisa, 
+			@PageableDefault(size = 5, sort= {"nome"}) Pageable pageable) {
 		
-		List<Pessoa> pessoas = new ArrayList<Pessoa>();
+		Page<Pessoa> pessoas = null;
 		
 		// Se estiver o sexo informado
 		if(sexopesquisa != null && !sexopesquisa.isEmpty() ) {
-			pessoas = pessoaRepository.findPessoaByNameSexo(nomepesquisa, sexopesquisa);
+			pessoas = pessoaRepository.findPessoaBySexoPage(nomepesquisa, sexopesquisa, pageable);
 		}else {
-			pessoas = pessoaRepository.findPessoaByName(nomepesquisa);
+			pessoas = pessoaRepository.findPessoaByNamePage(nomepesquisa, pageable);
 		}
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoas", pessoas);
 		modelAndView.addObject("pessoaobj", new Pessoa());
+		modelAndView.addObject("nomepesquisa", nomepesquisa); // para manter em tela
 		
 		return modelAndView;
 	}
@@ -721,11 +735,13 @@ public class PessoaController {
 	 * */
 	
 	@GetMapping("/pessoaspag")
-	public ModelAndView carregaPessoaPorPaginacao(@PageableDefault(size = 5) Pageable pageable, ModelAndView model) {
+	public ModelAndView carregaPessoaPorPaginacao(@PageableDefault(size = 5) Pageable pageable,
+			ModelAndView model, @RequestParam("nomepesquisa") String nomepesquisa) {
 		
-		Page<Pessoa> pagePessoa = pessoaRepository.findAll(pageable);
+		Page<Pessoa> pagePessoa = pessoaRepository.findPessoaByNamePage(nomepesquisa, pageable);
 		model.addObject("pessoas", pagePessoa);
 		model.addObject("pessoaobj", new Pessoa());
+		model.addObject("nomepesquisa", nomepesquisa);
 		model.setViewName("cadastro/cadastropessoa");
 		
 		return model;

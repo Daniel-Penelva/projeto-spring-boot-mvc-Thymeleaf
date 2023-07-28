@@ -2,6 +2,10 @@ package projeto.springboot.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -71,5 +75,70 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
 	
 	@Query("select p from Pessoa p where p.nome like %?1% and p.sexopessoa = ?2")
 	List<Pessoa> findPessoaByNameSexo(String nome, String sexopessoa);
+	
+	
+	
+	/**
+	 * O método abaixo faz parte de um repositório que estende a interface `JpaRepository` ou `PagingAndSortingRepository` do Spring Data JPA. O objetivo desse método é realizar uma 
+	 * consulta paginada de pessoas por parte do nome usando o recurso de `Example` do Spring Data JPA.
+	 * 
+	 * Vamos entender o que cada parte do script faz:
+	 * 
+	 * 1. `default Page<Pessoa> findPessoaByNamePage(String nome, Pageable pageable) {`: Essa é a assinatura do método. Ele recebe um parâmetro `nome` para buscar pessoas cujo 
+	 *    nome contenha uma determinada parte e um parâmetro `pageable`, que define a paginação dos resultados.
+	 *    
+	 * 2. `Pessoa pessoa = new Pessoa(); pessoa.setNome(nome);`: Aqui, é criada uma instância da classe `Pessoa` e definido o atributo `nome` com o valor passado como parâmetro.
+	 * 
+	 * 3. `ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny().withMatcher(nome, ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());`: É criado um 
+	 *    `ExampleMatcher` para configurar a pesquisa por partes do nome, usando o operador SQL `LIKE`. O método `matchingAny()` indica que a pesquisa pode ser realizada em 
+	 *    qualquer uma das propriedades da entidade. `withMatcher(nome, ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())` especifica que a pesquisa deve ser feita 
+	 *    na propriedade `nome` e que ela deve conter a parte do nome ignorando maiúsculas e minúsculas.
+	 *    
+	 * 4. `Example<Pessoa> example = Example.of(pessoa, exampleMatcher);`: A partir do objeto `pessoa` e do `exampleMatcher`, é criada uma instância de `Example<Pessoa>`. O 
+	 *    `Example` representa um exemplo da entidade que será utilizado na consulta para definir as condições da busca.
+	 *    
+	 * 5. `Page<Pessoa> pessoas = findAll(example, pageable);`: É feita a consulta usando o método `findAll()` do repositório com base no `Example` criado e nas configurações 
+	 *    de paginação definidas pelo `pageable`.
+	 *    
+	 * 6. `return pessoas;`: O método retorna o resultado da consulta paginada de pessoas.
+	 * 
+	 * Com esse método, você pode buscar pessoas cujo nome contenha uma parte específica e obter os resultados paginados, o que é útil para apresentar grandes conjuntos de dados 
+	 * de forma mais organizada e eficiente em uma interface de usuário.
+	 * */
+	default Page<Pessoa> findPessoaByNamePage(String nome, Pageable pageable){
+		
+		Pessoa pessoa = new Pessoa();
+		pessoa.setNome(nome);
+		
+		// Configurando a pesquisa para a consulta por partes do nome no banco de dados, igual a LIKE do SQL.
+		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny().withMatcher("nome", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+		
+		// Une o objeto com o valor e a configuração para a consulta 
+		Example<Pessoa> example = Example.of(pessoa, exampleMatcher);
+		
+		Page<Pessoa> pessoas = findAll(example, pageable);
+		
+		return pessoas;
+	}
+	
+	
+	default Page<Pessoa> findPessoaBySexoPage(String nome, String sexo, Pageable pageable){
+		
+		Pessoa pessoa = new Pessoa();
+		pessoa.setNome(nome);
+		pessoa.setSexopessoa(sexo);
+		
+		// Configurando a pesquisa para a consulta por partes do nome no banco de dados, igual a LIKE do SQL.
+		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny()
+				.withMatcher("nome", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+				.withMatcher("sexopessoa", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+		
+		// Une o objeto com o valor e a configuração para a consulta 
+		Example<Pessoa> example = Example.of(pessoa, exampleMatcher);
+		
+		Page<Pessoa> pessoas = findAll(example, pageable);
+		
+		return pessoas;
+	}
 	
 }

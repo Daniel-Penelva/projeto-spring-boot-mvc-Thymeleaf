@@ -1586,3 +1586,89 @@ No contexto de uma tabela HTML, a expressão <tr th:each="pessoa : ${pessoas.con
 dessa estrutura, você pode usar outras diretivas do Thymeleaf, como th:text ou th:href, para definir o conteúdo das células da tabela com base nas propriedades de cada objeto 
 pessoa.
 
+-------------- // --------------
+
+A classe `ExampleMatcher` é uma parte importante do Spring Data JPA e é usada para definir como as consultas de exemplo (queries by example) serão executadas. Consultas de 
+exemplo permitem que você execute consultas em entidades usando apenas os campos preenchidos em um exemplo (objeto de uma entidade) e ignorando os campos nulos.
+
+A `ExampleMatcher` é usada para definir critérios de correspondência (matching) para os campos da entidade quando você cria um exemplo para a consulta. É possível definir 
+diferentes tipos de combinação para cada campo, como correspondência exata, correspondência que contém, correspondência ignorando maiúsculas e minúsculas, etc.
+
+Aqui estão alguns dos principais recursos da classe `ExampleMatcher`:
+
+1. `withIgnoreCase()`: Permite configurar se a correspondência para uma determinada propriedade deve ignorar ou não a diferença entre letras maiúsculas e minúsculas.
+
+2. `withStringMatcher()`: Permite definir o tipo de correspondência que deve ser usado para campos de texto, como correspondência exata, correspondência que contém, correspondência 
+                          que inicia, etc.
+
+3. `withMatcher()`: Permite definir um critério de correspondência personalizado para uma determinada propriedade.
+
+4. `withIgnorePaths()`: Permite ignorar campos específicos ao criar o exemplo para a consulta.
+
+5. `withIncludeNullValues()`: Permite incluir ou excluir campos nulos do exemplo ao executar a consulta.
+
+6. `withIgnoreCase(true).withStringMatcher(StringMatcher.CONTAINING)`: Um exemplo de combinação que ignora maiúsculas e minúsculas e realiza uma correspondência que contém para 
+    campos de texto. Ou seja, a consulta considerará somente os campos preenchidos e ignorará campos nulos, e os campos de texto serão comparados ignorando a diferença entre 
+    letras maiúsculas e minúsculas e buscando o valor fornecido em qualquer parte do texto.
+
+Essa classe é normalmente usada em conjunto com a interface `Example` do Spring Data JPA, que é utilizada para construir a consulta de exemplo. A `Example` encapsula o objeto 
+de uma entidade que servirá como exemplo para a consulta, enquanto a `ExampleMatcher` define as configurações de correspondência para essa consulta.
+
+Por meio do uso adequado da classe `ExampleMatcher`, você pode criar consultas de exemplo flexíveis e eficientes, permitindo que o Spring Data JPA encontre entidades com base 
+nos campos preenchidos do exemplo, ignorando os campos nulos e aplicando diferentes estratégias de correspondência para campos de texto. Isso torna a construção de consultas 
+mais fácil e menos propensa a erros, especialmente quando você precisa executar consultas mais simples e diretas em suas entidades.
+
+-------------- // --------------
+
+A classe Example faz parte do pacote org.springframework.data.domain e é uma parte fundamental do Spring Data JPA. Ela é usada para criar uma consulta de exemplo 
+(query by example) com base em um objeto de uma entidade preenchido com os campos de busca.
+
+O objetivo principal da classe Example é permitir que você execute consultas em entidades usando apenas os campos preenchidos de um exemplo como critério de pesquisa. Os campos 
+não preenchidos no exemplo são tratados como "null" e não serão considerados na consulta. Isso torna a construção de consultas mais simples e flexíveis, especialmente quando você precisa executar consultas por correspondência de exemplo em entidades.
+
+Principais características e métodos da classe Example:
+
+ -> Example.of(T probe): Método estático usado para criar uma instância de Example a partir de um objeto preenchido (probe) que servirá como o exemplo de busca.
+
+ -> ExampleMatcher matcher(): Retorna o ExampleMatcher associado a essa instância de Example, que define as configurações de correspondência para a consulta.
+
+ -> T getProbe(): Retorna o objeto que representa o exemplo (probe) utilizado na consulta.
+
+ -> ExampleMatcher getMatcher(): Retorna o ExampleMatcher utilizado na consulta.
+
+ -> boolean isProbeAsLiteral(): Indica se o exemplo (probe) deve ser tratado como um valor literal na consulta. Por padrão, o valor é false, o que significa que a consulta considera os campos preenchidos como critérios de busca.
+
+A classe Example é comumente usada em conjunto com a interface CrudRepository ou PagingAndSortingRepository do Spring Data JPA para executar operações de busca em uma entidade 
+com base nos campos preenchidos do exemplo.
+
+-------------- // --------------
+
+A classe Page faz parte do pacote org.springframework.data.domain e é utilizada para representar os resultados paginados de uma consulta. Ela é amplamente usada no Spring Data 
+JPA para lidar com consultas que retornam grandes conjuntos de dados, onde é necessário dividir os resultados em várias páginas para melhorar a performance e a experiência do 
+usuário.
+
+O Page encapsula uma lista de elementos de uma determinada entidade, juntamente com informações sobre a paginação, como o número da página atual, o tamanho da página, o número 
+total de elementos disponíveis, entre outros. Isso permite que o Spring Data JPA implemente facilmente a funcionalidade de paginação para suas consultas, tornando mais fácil 
+para os desenvolvedores lidar com grandes volumes de dados.
+
+Principais características e métodos da classe Page:
+
+getContent(): Retorna a lista de elementos da página atual.
+
+getNumber(): Retorna o número da página atual (começa a contar a partir de 0).
+
+getSize(): Retorna o tamanho da página (ou seja, o número máximo de elementos exibidos em uma página).
+
+getTotalElements(): Retorna o número total de elementos disponíveis na consulta.
+
+getTotalPages(): Retorna o número total de páginas disponíveis com o tamanho de página atual.
+
+hasNext(): Verifica se existe uma próxima página após a página atual.
+
+hasPrevious(): Verifica se existe uma página anterior à página atual.
+
+isFirst(): Verifica se a página atual é a primeira página.
+
+isLast(): Verifica se a página atual é a última página.
+
+

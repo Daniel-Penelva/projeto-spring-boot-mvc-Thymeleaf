@@ -210,7 +210,9 @@ background: #eee;
 			<div class="row">
 				<div class="input-field col s6">
 					<label for="campopesquisa" class="active">Pesquisar por nome:</label> 
-					<input placeholder="Digite um nome" name="nomepesquisa" id="campopesquisa" class="validate"> 
+					<input placeholder="Digite um nome" name="nomepesquisa" id="campopesquisa" class="validate" 
+					th:value="${nomepesquisa}">
+					
 				</div>
 				
 				<div class="input-field col s6">
@@ -283,15 +285,15 @@ background: #eee;
 	<center>
 	
 		<span th:if="${pessoas.hasPrevious()}">
-			<a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size})}">Anterior</a>
+			<a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size}, nomepesquisa=${nomepesquisa})}">Anterior</a>
 		</span>
 	
 		<th:block th:each="i: ${#numbers.sequence(0, pessoas.totalPages - 1)}">
-			<a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size})}">[[ ${i} + 1 ]]</a>
+			<a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size}, nomepesquisa=${nomepesquisa})}">[[ ${i} + 1 ]]</a>
 		</th:block>
 		
 		<span th:if="${pessoas.hasNext()}">
-			<a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size})}">Próximo</a>
+			<a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size}, nomepesquisa=${nomepesquisa})}">Próximo</a>
 		</span>
 		
 	</center>
