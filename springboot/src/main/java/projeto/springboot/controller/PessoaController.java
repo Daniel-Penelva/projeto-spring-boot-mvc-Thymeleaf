@@ -12,8 +12,11 @@ import javax.validation.Valid;
 
 import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -679,6 +682,53 @@ public class PessoaController {
 			// Finaliza a resposta passando o arquivo 
 			response.getOutputStream().write(pessoa.getCurriculo());
 		}
+	}
+	
+	
+	/**
+	 * Abaixo é um método de um controlador Spring Boot que lida com uma requisição GET para a URL "/pessoaspag". Vamos explicar o que cada parte do script faz:
+	 * 
+	 * 1. `@GetMapping("/pessoaspag")`: É uma anotação do Spring que mapeia a URL "/pessoaspag" a esse método. Isso significa que quando a URL "/pessoaspag" é acessada através 
+	 *     de uma requisição GET, esse método será executado.
+	 *     
+	 * 2. `@PageableDefault(size = 5)`: É uma anotação que configura o objeto Pageable padrão para ser usado no método. O Pageable é usado para suportar a paginação de resultados 
+	 *    na consulta ao banco de dados. Neste caso, estamos definindo o tamanho padrão de página como 5, o que significa que cada página terá no máximo 5 registros.
+	 * 
+	 * 3. `Pageable pageable`: É o objeto Pageable que será fornecido automaticamente pelo Spring Boot com base na configuração da anotação `@PageableDefault`. Esse objeto contém 
+	 *    informações sobre a paginação, como número da página, tamanho da página, etc.
+	 *    
+	 * 4. `ModelAndView model`: É um objeto ModelAndView que é usado para passar dados para a visualização (template) que será renderizada. Ele é usado para adicionar objetos 
+	 *    que serão acessíveis no template.
+	 *    
+	 * 5. `Page<Pessoa> pagePessoa = pessoaRepository.findAll(pageable)`: É onde a consulta ao banco de dados é feita usando o objeto Pageable para realizar a paginação. O 
+	 *    método `findAll` do repositório (pessoaRepository) é chamado, e ele retorna uma página de objetos do tipo `Pessoa`. Essa página contém os resultados da consulta para 
+	 *    a página específica com base nas informações do objeto `pageable`.
+	 *    
+	 * 6. `model.addObject("pessoas", pagePessoa)`: Aqui, estamos adicionando o objeto `pagePessoa` ao modelo com o nome "pessoas". Isso significa que na visualização (template), 
+	 *    podemos acessar a lista de pessoas usando o nome "pessoas".
+	 *    
+	 * 7. `model.addObject("pessoaobj", new Pessoa())`: Estamos adicionando um novo objeto `Pessoa` vazio ao modelo com o nome "pessoaobj". Esse objeto é usado para permitir a 
+	 *    adição de uma nova pessoa no formulário da visualização.
+	 *    
+	 * 8. `model.setViewName("cadastro/cadastropessoa")`: Aqui, estamos definindo o nome da visualização (template) que será renderizada. Neste caso, a visualização é 
+	 *    "cadastro/cadastropessoa".
+	 *    
+	 * 9. `return model`: Por fim, o método retorna o objeto ModelAndView, que contém os dados para serem usados na visualização.
+	 * 
+	 * Em resumo, esse método é responsável por carregar a lista de pessoas paginada a partir do banco de dados e fornecer os dados necessários para a visualização (template) 
+	 * "cadastro/cadastropessoa". Esse template pode então usar os dados da página de pessoas para exibir as informações em uma tabela e também permitir a adição de novas 
+	 * pessoas através do objeto "pessoaobj".
+	 * */
+	
+	@GetMapping("/pessoaspag")
+	public ModelAndView carregaPessoaPorPaginacao(@PageableDefault(size = 5) Pageable pageable, ModelAndView model) {
+		
+		Page<Pessoa> pagePessoa = pessoaRepository.findAll(pageable);
+		model.addObject("pessoas", pagePessoa);
+		model.addObject("pessoaobj", new Pessoa());
+		model.setViewName("cadastro/cadastropessoa");
+		
+		return model;
 	}
 
 }

@@ -1573,3 +1573,16 @@ Contagem de registros:
 A JpaRepository também suporta consultas derivadas, onde você pode definir consultas personalizadas apenas fornecendo um nome de método seguindo as convenções de nomenclatura 
 do Spring Data JPA. Isso ajuda a reduzir a quantidade de código necessário para consultas simples.
 
+-------------- // --------------
+Explicando o .content
+
+th:each: É uma diretiva do Thymeleaf que permite iterar sobre uma coleção de objetos. Neste caso, a diretiva th:each é usada para iterar sobre a lista de pessoas 
+(${pessoas.content}) obtida por meio de uma consulta paginada.
+
+${pessoas.content}: É uma expressão do Thymeleaf que representa a lista de pessoas. O atributo content é utilizado em consultas paginadas do Spring Data JPA para obter a lista 
+de elementos da página atual.
+
+No contexto de uma tabela HTML, a expressão <tr th:each="pessoa : ${pessoas.content}"> é usada para criar uma nova linha na tabela para cada elemento da lista de pessoas. Dentro 
+dessa estrutura, você pode usar outras diretivas do Thymeleaf, como th:text ou th:href, para definir o conteúdo das células da tabela com base nas propriedades de cada objeto 
+pessoa.
+
