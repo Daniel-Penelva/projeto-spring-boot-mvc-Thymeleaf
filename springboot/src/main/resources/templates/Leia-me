@@ -1536,3 +1536,40 @@ Exemplo:
 <p th:inline="text">Olá, [[${nome}]]!</p>
 ```
 
+-------------------------------------------------------------- // ---------------------------------------------------------------
+
+Implementando paginação
+
+Na classe PessoaRepository: Para implementar paginação temos que mudar a extensão da Interface 'CrudRepository' para 'JPARepository' para que possamos ter os métodos de paginação.
+
+A interface JpaRepository faz parte do Spring Data JPA, que é uma extensão do Spring Framework que simplifica o acesso e a manipulação de dados em bancos de dados relacionais 
+usando a tecnologia JPA (Java Persistence API). A JpaRepository fornece uma série de métodos predefinidos que permitem realizar operações de persistência no banco de dados, como 
+criar, atualizar, excluir e consultar registros sem a necessidade de escrever consultas SQL manualmente.
+
+Além disso, a JpaRepository é uma subinterface da PagingAndSortingRepository, o que significa que ela herda os métodos de paginação e ordenação, permitindo que os resultados de 
+consultas sejam paginados e ordenados de forma mais eficiente.
+
+Aqui estão algumas das principais funcionalidades e métodos disponíveis na JpaRepository:
+
+Operações CRUD (Create, Read, Update, Delete):
+  -> save(T entity): Salva ou atualiza uma entidade no banco de dados.
+  -> delete(T entity): Exclui uma entidade do banco de dados.
+  -> findById(ID id): Consulta uma entidade pelo seu ID.
+  -> existsById(ID id): Verifica se uma entidade com o ID informado existe no banco de dados.
+
+
+Consultas personalizadas:
+  -> @Query: Permite definir consultas personalizadas usando a linguagem JPQL (Java Persistence Query Language) ou SQL nativo.
+  -> findBy<PropertyName>: Permite criar consultas personalizadas com base nos nomes dos atributos da entidade. Por exemplo, se tivermos uma propriedade chamada nome na entidade, 
+                           podemos criar um método findByNome(String nome) para buscar entidades com esse nome.
+
+
+Paginação e Ordenação:
+  -> findAll(Pageable pageable): Consulta todas as entidades paginadas e ordenadas de acordo com o objeto Pageable.
+
+Contagem de registros:
+  -> count(): Retorna o número total de registros na tabela.
+
+A JpaRepository também suporta consultas derivadas, onde você pode definir consultas personalizadas apenas fornecendo um nome de método seguindo as convenções de nomenclatura 
+do Spring Data JPA. Isso ajuda a reduzir a quantidade de código necessário para consultas simples.
+

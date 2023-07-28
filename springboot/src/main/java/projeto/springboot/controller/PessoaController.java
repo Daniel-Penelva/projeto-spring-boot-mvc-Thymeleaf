@@ -12,6 +12,8 @@ import javax.validation.Valid;
 
 import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -72,8 +74,7 @@ public class PessoaController {
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaobj", new Pessoa());
 		
-		Iterable<Pessoa> pessoaIt = pessoaRepository.findAll();
-		modelAndView.addObject("pessoas", pessoaIt);
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		
 		return modelAndView;
@@ -163,8 +164,7 @@ public class PessoaController {
 		if(bindingResult.hasErrors()) {
 			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 			
-			Iterable<Pessoa> pessoaIt = pessoaRepository.findAll();
-			modelAndView.addObject("pessoas", pessoaIt);
+			modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 			modelAndView.addObject("pessoaobj",pessoa);
 			
 			List<String> msg = new ArrayList<String>();
@@ -194,9 +194,8 @@ public class PessoaController {
 		pessoaRepository.save(pessoa);
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
-		Iterable<Pessoa> pessoaIt = pessoaRepository.findAll();
 		
-		modelAndView.addObject("pessoas", pessoaIt);
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		modelAndView.addObject("pessoaobj", new Pessoa());
 
 		return modelAndView;
@@ -232,8 +231,7 @@ public class PessoaController {
 
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 
-		Iterable<Pessoa> pessoaIt = pessoaRepository.findAll();
-		modelAndView.addObject("pessoas", pessoaIt);
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		modelAndView.addObject("pessoaobj", new Pessoa());
 
 		return modelAndView;
@@ -314,7 +312,7 @@ public class PessoaController {
 		pessoaRepository.deleteById(idpessoa);
 
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
-		modelAndView.addObject("pessoas", pessoaRepository.findAll());
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		modelAndView.addObject("pessoaobj", new Pessoa());
 
 		return modelAndView;

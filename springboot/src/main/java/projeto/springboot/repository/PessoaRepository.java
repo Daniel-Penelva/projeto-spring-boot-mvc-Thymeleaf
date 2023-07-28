@@ -2,6 +2,7 @@ package projeto.springboot.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,7 @@ import projeto.springboot.model.Pessoa;
 
 @Repository
 @Transactional
-public interface PessoaRepository extends CrudRepository<Pessoa, Long>{
+public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
 	
 	/**
 	 * O código abaixo é uma declaração de método em uma interface de repositório no Spring Data JPA. Ele define uma consulta personalizada 
